@@ -47,7 +47,7 @@ If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Lar
     -   git
     -   Docker (optionnel)
 
-    Télécharger les fichiers du projet avec git, la branche main est supposée être la branche la plus stable
+    Télécharger les fichiers du projet avec git, la branche main est supposée être la branche la plus stable. Copier le fichier `.env.example` vers `.env` à la racine du projet.
 
 -   ### Installation des librairies et dépendances
 
@@ -56,6 +56,11 @@ If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Lar
 ## Démarrer le projet
 
 -   ### Avec Docker
+
+    L'architecture docker du projet se présente sous la forme d'un paquet nommé `laravel sail`.
+    Vous pouvez ajouter l'alias du script shell avec la commande suivante sous linux `alias sail='[ -f sail ] && sh sail || sh vendor/bin/sail'`.
+
+    Il suffit ensuite d'exécuter la commande `sail up -d` à la racine du projet pour démarrer les conteneurs. Sail inclut un conteneur pour l'exécution de code en PHP, ainsi qu'un conteneur pour la base de données dont les identifiants sont appliqués via le fichier `.env`.
 
 ## License
 
