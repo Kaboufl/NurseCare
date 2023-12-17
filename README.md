@@ -29,37 +29,33 @@ You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you
 
 If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
-## Laravel Sponsors
+# Nurse Care
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## Installation du projet
 
-### Premium Partners
+-   ### Prérequis
 
--   **[Vehikl](https://vehikl.com/)**
--   **[Tighten Co.](https://tighten.co)**
--   **[WebReinvent](https://webreinvent.com/)**
--   **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
--   **[64 Robots](https://64robots.com)**
--   **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
--   **[Cyber-Duck](https://cyber-duck.co.uk)**
--   **[DevSquad](https://devsquad.com/hire-laravel-developers)**
--   **[Jump24](https://jump24.co.uk)**
--   **[Redberry](https://redberry.international/laravel/)**
--   **[Active Logic](https://activelogic.com)**
--   **[byte5](https://byte5.de)**
--   **[OP.GG](https://op.gg)**
+    -   PHP 8.3 avec les extensions nécéssaires pour composer et laravel :
 
-## Contributing
+    ```
+    sudo apt install openssl php8.3-bcmath php8.3-curl php8.3-json php8.3-mbstring php8.3-mysql php8.3-tokenizer php8.3-xml php8.3-zip
+    ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+    -   Composer (trouvable [ici](https://getcomposer.org/download/))
+    -   nodeJS 20.10
+    -   MySQL 8 / mariaDB
+    -   git
+    -   Docker (optionnel)
 
-## Code of Conduct
+    Télécharger les fichiers du projet avec git, la branche main est supposée être la branche la plus stable
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+-   ### Installation des librairies et dépendances
 
-## Security Vulnerabilities
+    À la racine du projet, réaliser les commandes `composer install` suivi de `php artisan key:generate`, et enfin `npm install`
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Démarrer le projet
+
+-   ### Avec Docker
 
 ## License
 
