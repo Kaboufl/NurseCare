@@ -4,15 +4,15 @@
   "description": "L'API de l'application NurseCare réalisée dans le cadre du BTS SIO 2eme année",
   "main": "dist/app.js",
   "scripts": {
-    "start": "tsc && node dist/app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "npm run build && node dist/app.js",
+    "build":"tsc"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@types/express": "^4.16.1",
     "tslint": "^5.12.1",
-    "typescript": "^3.3.3"
+    "typescript": "^5.3.3"
   },
   "dependencies": {
     "express": "^4.16.4"
