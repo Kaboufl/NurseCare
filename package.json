@@ -4,7 +4,7 @@
   "description": "L'API de l'application NurseCare réalisée dans le cadre du BTS SIO 2eme année",
   "main": "dist/app.js",
   "scripts": {
-    "start": "npm run build && node dist/app.js",
+    "start": "npm run build && nodemon dist/app.js",
     "build": "tsc"
   },
   "author": "",
@@ -18,7 +18,9 @@
   "dependencies": {
     "dotenv": "^16.3.1",
     "express": "^4.16.4",
+    "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.6.5",
+    "nodemon": "^3.0.2",
     "reflect-metadata": "^0.2.1",
     "typeorm": "^0.3.17"
   }
