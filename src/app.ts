@@ -8,8 +8,12 @@ import { Personnel } from "./entity/personnel";
 
 import NCDB from "./data_source/datasource";
 
+import PersonnelRoutes from "./routes/PersonnelRoutes";
+
 const app = express();
 const port = 3000;
+
+app.use("/personnel", PersonnelRoutes);
 
 app.get("/", async (req, res) => {
   const personnel = await (await NCDB()).manager.find(Personnel);
@@ -31,12 +35,19 @@ app.get("/add", async (req, res) => {
   });
 
   try {
+    const response = {
+      statut: "ok",
+      item: newPersonnel,
+    };
     manager.save(newPersonnel);
+    res.json(response);
   } catch (error) {
     console.error("Le personnel n'a pas pu être ajouté");
+    const response = {
+      statut: "error",
+      item: null,
+    };
   }
-
-  res.send("personnel ajouté");
 });
 
 app.listen(port, async () => {
