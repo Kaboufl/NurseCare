@@ -8,6 +8,21 @@ const PersonnelController = {
     res.json(personnel);
   },
 
+  async getPersonnel(req: Request, res: Response) {
+    console.log("GET un seul profil personnel, le ", req.params.id);
+
+    const table = (await NCDB()).manager;
+
+    try {
+      const personnel = await table.findOneByOrFail(Personnel, { id: Number(req.params.id)});
+      res.json(personnel)
+    } catch (error) {
+      console.log("Echec de la récupération du profil à l'id ", req.params.id)
+      res.status(500).json({ error: 'Échec de la récupération du profil à l\'id '+req.params.id })
+      throw error
+    }
+  },
+
   async addNewPersonnel(req: Request, res: Response) {
     const table = (await NCDB()).manager;
     const newPersonnel = table.create(Personnel, {
@@ -40,6 +55,24 @@ const PersonnelController = {
       res.json(response);
     }
   },
+
+  async updatePersonnel(req: Request, res: Response) {
+    console.log(`Mise à jour d'un profil du personnel à l'id ${req.params.id}`)
+
+    const table = (await NCDB()).manager
+    
+    try {
+      const personnel = await table.findOneByOrFail(Personnel, { id: Number(req.params.id) })
+
+
+      console.log(personnel)
+    } catch (error) {
+      const errorMsg = 'Erreur ! Impossible de trouver un profil personnel à l\'id '+req.params.id
+      console.error(errorMsg)
+      res.status(500).send(errorMsg)
+    }
+  }
+
 };
 
 export default PersonnelController;

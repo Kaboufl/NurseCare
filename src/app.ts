@@ -9,10 +9,14 @@ import { Personnel } from "./entity/personnel";
 import NCDB from "./data_source/datasource";
 
 import PersonnelRoutes from "./routes/PersonnelRoutes";
+import AuthRoutes from "./routes/AuthRoutes";
 
 const app = express();
 const port = 3000;
 
+app.use(express.json());
+
+app.use("/auth", AuthRoutes);
 app.use("/personnel", PersonnelRoutes);
 
 app.get("/", async (req, res) => {
