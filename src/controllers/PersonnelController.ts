@@ -1,30 +1,40 @@
 import { Request, Response } from "express";
-import NCDB from "../data_source/datasource";
 import { Personnel } from "../entity/personnel";
+import { NCDataSource } from "../data_source/datasource";
+
+const datasource = NCDataSource;
 
 const PersonnelController = {
+  async isDatasourceInitialized(req: Request, res: Response) {
+    datasource.isInitialized
+      ? console.log("Datasource OK")
+      : console.log("Datasource KO");
+  },
+
   async getAllPersonnel(req: Request, res: Response) {
-    const personnel = await (await NCDB()).manager.find(Personnel);
+    const personnel = await datasource.manager.find(Personnel);
     res.json(personnel);
   },
 
   async getPersonnel(req: Request, res: Response) {
     console.log("GET un seul profil personnel, le ", req.params.id);
 
-    const table = (await NCDB()).manager;
-
     try {
-      const personnel = await table.findOneByOrFail(Personnel, { id: Number(req.params.id)});
-      res.json(personnel)
+      const personnel = await datasource.manager.findOneByOrFail(Personnel, {
+        id: Number(req.params.id),
+      });
+      res.json(personnel);
     } catch (error) {
-      console.log("Echec de la récupération du profil à l'id ", req.params.id)
-      res.status(500).json({ error: 'Échec de la récupération du profil à l\'id '+req.params.id })
-      throw error
+      console.log("Echec de la récupération du profil à l'id ", req.params.id);
+      res.status(500).json({
+        error: "Échec de la récupération du profil à l'id " + req.params.id,
+      });
+      throw error;
     }
   },
 
   async addNewPersonnel(req: Request, res: Response) {
-    const table = (await NCDB()).manager;
+    const table = datasource.manager;
     const newPersonnel = table.create(Personnel, {
       nom: "Timber",
       prenom: "Saw",
@@ -57,22 +67,22 @@ const PersonnelController = {
   },
 
   async updatePersonnel(req: Request, res: Response) {
-    console.log(`Mise à jour d'un profil du personnel à l'id ${req.params.id}`)
+    console.log(`Mise à jour d'un profil du personnel à l'id ${req.params.id}`);
 
-    const table = (await NCDB()).manager
-    
     try {
-      const personnel = await table.findOneByOrFail(Personnel, { id: Number(req.params.id) })
+      const personnel = datasource.manager.findOneByOrFail(Personnel, {
+        id: Number(req.params.id),
+      });
 
-
-      console.log(personnel)
+      console.log(personnel);
     } catch (error) {
-      const errorMsg = 'Erreur ! Impossible de trouver un profil personnel à l\'id '+req.params.id
-      console.error(errorMsg)
-      res.status(500).send(errorMsg)
+      const errorMsg =
+        "Erreur ! Impossible de trouver un profil personnel à l'id " +
+        req.params.id;
+      console.error(errorMsg);
+      res.status(500).send(errorMsg);
     }
-  }
-
+  },
 };
 
 export default PersonnelController;

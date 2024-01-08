@@ -5,11 +5,22 @@ import express from "express";
 import "reflect-metadata";
 
 import { Personnel } from "./entity/personnel";
-
-import NCDB from "./data_source/datasource";
+import { Etablissement } from "./entity/etablissement";
 
 import PersonnelRoutes from "./routes/PersonnelRoutes";
 import AuthRoutes from "./routes/AuthRoutes";
+import { NCDataSource } from "./data_source/datasource";
+
+const datasource = NCDataSource;
+
+datasource
+  .initialize()
+  .then(() => {
+    console.log("Datasource initialisée");
+  })
+  .catch((err) => {
+    console.error("Erreur lors de l'initialisation de la base de données", err);
+  });
 
 const app = express();
 const port = 3000;
@@ -20,14 +31,14 @@ app.use("/auth", AuthRoutes);
 app.use("/personnel", PersonnelRoutes);
 
 app.get("/", async (req, res) => {
-  const personnel = await (await NCDB()).manager.find(Personnel);
+  const personnel = datasource.manager.find(Personnel);
 
   console.log(personnel);
   res.send(personnel);
 });
 
 app.get("/add", async (req, res) => {
-  const manager = (await NCDB()).manager;
+  const manager = datasource.manager;
 
   const newPersonnel = manager.create(Personnel, {
     nom: "Timber",
@@ -56,4 +67,6 @@ app.get("/add", async (req, res) => {
 
 app.listen(port, async () => {
   console.log(`server is listening on ${port}`);
+
+  console.log(__dirname);
 });

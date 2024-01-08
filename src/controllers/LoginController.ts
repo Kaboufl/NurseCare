@@ -1,8 +1,5 @@
-import { Request, Response } from 'express'
-import NCDB from "../data_source/datasource";
+import { Request, Response } from "express";
 
-const LoginController = {
-
-}
+const LoginController = {};
 
 export default LoginController;

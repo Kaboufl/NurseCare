@@ -4,14 +4,16 @@ import authenticateToken from "../middlewares/auth";
 
 const router = express.Router();
 
-router.use(authenticateToken)
+router.use(authenticateToken);
+
+router.get("/datasource", PersonnelController.isDatasourceInitialized);
 
 router.get("/", PersonnelController.getAllPersonnel);
 router.get("/:id", PersonnelController.getPersonnel);
 router.put("/:id", PersonnelController.updatePersonnel);
 router.post("/", PersonnelController.addNewPersonnel);
 router.delete("/:id", async (req, res) => {
-    res.status(200).json({ statut: "WIP"});
-})
+  res.status(200).json({ statut: "WIP" });
+});
 
 export default router;
