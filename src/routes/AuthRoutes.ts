@@ -15,6 +15,8 @@ router.get("/", (req, res) => {
   res.json({ statut: "WIP" });
 });
 
+router.post("/login", LoginController.login);
+
 router.get("/token", (req, res) => {
   const loginObj = {
     name: "username",
