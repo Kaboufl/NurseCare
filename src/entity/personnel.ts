@@ -1,4 +1,8 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm"
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm"
+import { Etablissement } from "./etablissement"
+import { Role } from "./role"
+import { Intervention } from "./intervention"
+import { BonObservation } from "./bonobservation"
 
 @Entity()
 export class Personnel {
@@ -17,9 +21,15 @@ export class Personnel {
     @Column()
     tel: string
     
-    @Column()
-    etablissement: number
+    @OneToMany((type) => Etablissement, (Etablissement) => Etablissement.id)
+    etablissement: Etablissement["nom"]
 
-    @Column()
-    role: number
+    @OneToMany((type) => Role, (Role) => Role.id)
+    role: Role["nom"]
+
+    @ManyToOne((type) => Intervention, (Intervention) => Intervention.id)
+    interventions: Intervention[]
+
+    @ManyToOne((type) => BonObservation, (BonObservation) => BonObservation.id)
+    bonsobservation: BonObservation[]
 }
