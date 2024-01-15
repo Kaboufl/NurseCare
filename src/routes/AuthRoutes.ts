@@ -11,15 +11,26 @@ function generateAccessToken(user: object) {
   });
 }
 
+/**
+ * Bien que l'url soit "/", la route est en réalité "/auth" car elle est définie
+ * dans le fichier src/app.ts avec le préfixe "/auth"
+ */
 router.get("/", (req, res) => {
   res.json({ statut: "WIP" });
 });
 
+/**
+ * Cette route permet de se connecter à l'application, elle est accompagnée d'une
+ * fonction qui permet de vérifier les identifiants et de générer le token,
+ * cependant ici la logique est déplacée dans un controlleur, en l'occurence LoginController
+ */
 router.post("/login", LoginController.login);
 
-
 /**
- * Ces routes sont directement accompagnées de fonctions, il est possible de faire comme ça, notamment pour expérimenter, mais il est préférable et considéré "bonne pratique" de déplacer à termes la logique dans un controlleur associé aux routes (cf pattern design MVC / MVVC)
+ * Ces routes sont directement accompagnées de fonctions, il est possible de faire
+ * comme ça, notamment pour expérimenter, mais il est préférable et considéré
+ * "bonne pratique" de déplacer à termes la logique dans un controlleur associé
+ * aux routes (cf pattern design MVC / MVVC)
  */
 router.get("/token", (req, res) => {
   const loginObj = {

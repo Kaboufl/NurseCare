@@ -9,14 +9,24 @@ import authenticateToken from "../middlewares/auth";
 
 const router = express.Router();
 
-
 /**
- * Cette directive importe le middleware authenticateToken, qui permet de vérifier avant même de passer par le controlleur si l'utilisateur possède un token valide
+ * Cette directive importe le middleware authenticateToken, qui permet de vérifier
+ * avant même de passer par le controlleur si l'utilisateur possède un token valide,
+ * le code importé ici sera exécuté avant chaque requête sur les routes définies ci-dessous
+ * de sorte que si le token n'est pas valide, la requête ne sera pas traitée
  */
 router.use(authenticateToken);
 
+/**
+ * Cette route permet de vérifier si la datasource est bien initialisée
+ */
 router.get("/datasource", PersonnelController.isDatasourceInitialized);
 
+/**
+ * Bien que l'url soit "/", la route est en réalité "/personnel" car elle est définie
+ * dans le fichier src/app.ts avec le préfixe "/personnel", les routes suivantes font appel
+ * aux méthodes du controlleur PersonnelController (cf pattern design MVC / MVVC)
+ */
 router.get("/", PersonnelController.getAllPersonnel);
 router.get("/:id", PersonnelController.getPersonnel);
 router.put("/:id", PersonnelController.updatePersonnel);
