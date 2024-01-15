@@ -18,7 +18,7 @@ export class Personnel {
     @Column()
     adresse: string
 
-    @Column()
+    @Column({length:10})
     tel: string
     
     @OneToMany((type) => Etablissement, (Etablissement) => Etablissement.id)

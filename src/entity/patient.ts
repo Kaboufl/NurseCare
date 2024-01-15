@@ -16,7 +16,7 @@ export class Patient {
     adresse: string 
 
     @Column({length:10})
-    tel: number
+    tel: string
 
     @ManyToOne((type) => Intervention, (Intervention) => Intervention.id)
     interventions: Intervention[]
