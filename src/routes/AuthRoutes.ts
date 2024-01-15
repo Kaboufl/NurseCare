@@ -17,6 +17,10 @@ router.get("/", (req, res) => {
 
 router.post("/login", LoginController.login);
 
+
+/**
+ * Ces routes sont directement accompagnées de fonctions, il est possible de faire comme ça, notamment pour expérimenter, mais il est préférable et considéré "bonne pratique" de déplacer à termes la logique dans un controlleur associé aux routes (cf pattern design MVC / MVVC)
+ */
 router.get("/token", (req, res) => {
   const loginObj = {
     name: "username",
