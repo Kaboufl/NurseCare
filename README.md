@@ -36,4 +36,4 @@
 
   Il est tout à fait possible de travailler sur l'API sur du _bare metal_, il vous faudra cependant installer vous même la base de données ainsi que l'environnement d'exécution de la solution (PHP pour l'app, nodeJS pour les différents packages auxiliaires à Laravel)
 
-> _Commenté par Romain et Copilot_
+> _Commenté à l'aide de copilot_
