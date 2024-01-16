@@ -14,16 +14,8 @@ export class Personnel {
   @Column()
   adresse: string;
 
-<<<<<<< HEAD
-    @Column({length:10})
-    tel: string
-    
-    @OneToMany((type) => Etablissement, (Etablissement) => Etablissement.id)
-    etablissement: Etablissement["nom"]
-=======
   @Column()
   tel: string;
->>>>>>> 7b01d03ff5bdafa4dc3a42efda15f3e1a2506658
 
   @Column()
   etablissement: number;
