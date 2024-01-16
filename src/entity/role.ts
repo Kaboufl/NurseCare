@@ -1,14 +1,10 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm"
-import { Personnel } from "./personnel"
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
-export class Role {
-    @PrimaryGeneratedColumn()
-    id: number
+export class Personnel {
+  @PrimaryGeneratedColumn()
+  id: number | undefined;
 
-    @Column()
-    nom: string
-
-    @ManyToOne((type) => Personnel, (Personnel) => Personnel.id)
-    personnel: Personnel[]
+  @Column()
+  nom: string;
 }
