@@ -4,6 +4,10 @@ import { NCDataSource } from "../data_source/datasource";
 
 const datasource = NCDataSource;
 
+
+/**
+ * Ce controlleur rassemble les méthodes permettant d'accéder aux informations du personnel de NC, de les modifiers ou même de les supprimer
+ */
 const PersonnelController = {
   async isDatasourceInitialized(req: Request, res: Response) {
     datasource.isInitialized
@@ -40,8 +44,8 @@ const PersonnelController = {
       prenom: "Saw",
       adresse: "20 rue des potiers",
       tel: "0123456789",
-      etablissement: 4,
-      role: 7,
+      etablissement: "4",
+      role: "7",
     });
 
     let response = {
