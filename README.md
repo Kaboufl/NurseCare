@@ -33,4 +33,17 @@ Le projet est une application [expressJS](https://expressjs.com/fr/) écrite en 
 
 Pour démarrer le serveur d'API, taper `npm run start` à la racine du projet. À noter que le serveur à besoin d'un build du code TS pour démarrer, donc une fois le serveur démarré, pour appliquer des modifications au code, il est nécéssaire de l'arrêter pour ensuite le redémarrer.
 
+## Comment travailler sur le projet ?
+
+La branche `main` du projet est la branche supposée être la plus stable, constituant ainsi une base saine avec laquelle partir pour développer une nouvelle fonctionnalité :
+
+- Assurez vous d'avoir récupéré les dernières modifications (avec un `git pull`)
+- Créez une nouvelle branche `git checkout -b <votre-nom-de-branche>`
+- Une fois vos modifications faites (ainsi que vos commits), répliquez votre branche sur github `git push --set-upstream origin <votre-nom-de-branche>`
+- Une fois votre fonctionnalitée prête, vous pouvez intégrer vos changements à la branche `main` :
+  - Mettez vous sur la branche main `git checkout main`
+  - Récupérez vos changements sur votre branche `git pull origin <votre-nom-de-branche>`
+  - Résolvez d'éventuels conflits
+  - Poussez vos modifications
+
 > _Commenté à l'aide de copilot_
