@@ -17,11 +17,13 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
+    "@faker-js/faker": "^8.3.1",
     "dotenv": "^16.3.1",
     "express": "^4.16.4",
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.6.5",
     "reflect-metadata": "^0.2.1",
-    "typeorm": "^0.3.17"
+    "typeorm": "^0.3.17",
+    "typeorm-extension": "^3.4.0"
   }
 }
