@@ -1,6 +1,6 @@
 import { DataSource } from "typeorm";
 
-import { Personnel } from "../entity/personnel";
+import Personnel from "../entity/personnel";
 import { Etablissement } from "../entity/etablissement";
 
 export const NCDataSource = new DataSource({

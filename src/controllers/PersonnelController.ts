@@ -1,9 +1,8 @@
 import { Request, Response } from "express";
-import { Personnel } from "../entity/personnel";
+import Personnel from "../entity/personnel";
 import { NCDataSource } from "../data_source/datasource";
 
 const datasource = NCDataSource;
-
 
 /**
  * Ce controlleur rassemble les méthodes permettant d'accéder aux informations du personnel de NC, de les modifiers ou même de les supprimer
@@ -44,8 +43,8 @@ const PersonnelController = {
       prenom: "Saw",
       adresse: "20 rue des potiers",
       tel: "0123456789",
-      etablissement: "4",
-      role: "7",
+      etablissement: 4,
+      role: 7,
     });
 
     let response = {
