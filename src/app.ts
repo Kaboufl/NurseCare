@@ -56,7 +56,7 @@ app.use("/personnel", PersonnelRoutes);
  * Ces routes sont des routes de test, elles permettent de vérifier que la connexion
  * à la base de données est bien établie et d'intéragir avec
  */
-import { Personnel } from "./entity/personnel";
+import Personnel from "./entity/personnel";
 import { Etablissement } from "./entity/etablissement";
 
 app.get("/", async (req, res) => {
@@ -74,8 +74,8 @@ app.get("/add", async (req, res) => {
     prenom: "Saw",
     adresse: "20 rue des potiers",
     tel: "0123456789",
-    etablissement: "4",
-    role: "7",
+    etablissement: 4,
+    role: 7,
   });
 
   try {
