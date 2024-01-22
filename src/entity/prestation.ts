@@ -1,23 +1,31 @@
-import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm"
-import { BonObservation } from "./bonobservation"
-import { Intervention } from "./intervention"
-import { Soin } from "./soin"
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import { BonObservation } from "./bonobservation";
+import Intervention from "./intervention";
+import { Soin } from "./soin";
 
 @Entity()
 export class Prestation {
-    @PrimaryGeneratedColumn()
-    id: number
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column()
-    commentaire: string
+  @Column()
+  commentaire: string;
 
-    @OneToMany((type) => Soin, (Soin) => Soin.id)
-    soins: Soin["nom"]
+  @OneToMany((type) => Soin, (Soin) => Soin.id)
+  soins: Soin["nom"];
 
-    @ManyToOne((type) => Intervention, (Intervention) => Intervention.id)
-    intervention: Intervention["id"]
+  @ManyToOne((type) => Intervention, (Intervention) => Intervention.id)
+  intervention: Intervention["id"];
 
-
-    @ManyToOne((type) => BonObservation, (BonObservation) => BonObservation.prestation)
-    bonobservation: BonObservation[]
+  @ManyToOne(
+    (type) => BonObservation,
+    (BonObservation) => BonObservation.prestation
+  )
+  bonobservation: BonObservation[];
 }
