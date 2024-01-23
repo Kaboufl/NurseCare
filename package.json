@@ -6,6 +6,7 @@
   "scripts": {
     "start": "npm run build && node dist/app.js",
     "build": "tsc",
+    "generate-scheme": "prisma generate",
     "seed": "ts-node ./src/seed.ts"
   },
   "author": "",
@@ -22,6 +23,7 @@
   "dependencies": {
     "@faker-js/faker": "^8.3.1",
     "@prisma/client": "^5.8.1",
+    "bcryptjs": "^2.4.3",
     "dotenv": "^16.3.1",
     "express": "^4.16.4",
     "jsonwebtoken": "^9.0.2",
