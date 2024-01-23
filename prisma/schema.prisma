@@ -85,6 +85,7 @@ model Patient {
   prenom String @db.VarChar(100)
   adresse String @db.VarChar(150)
   tel String @db.VarChar(10)
+  mail String @db.VarChar(80)
   interventions Intervention[]
 }
 
