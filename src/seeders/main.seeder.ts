@@ -1,22 +1,24 @@
 import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient();
+import { faker, type Faker } from "@faker-js/faker";
+import * as factories from "./factories";
+export const prisma = new PrismaClient();
 
 async function main() {
-    const AS = await prisma.role.upsert({
-        where: { id: 2 },
-        update: {},
-        create: {
-            libelle: 'Administrateur'
-        }
-    })
+  const roles = await factories.RoleFactory.create();
+  const etablissements = await factories.EtablissementFactory.create(4);
+  const personnel = factories.PersonnelFactory.create(
+    10,
+    roles,
+    etablissements
+  );
 }
 
 main()
   .then(async () => {
-    await prisma.$disconnect()
+    await prisma.$disconnect();
   })
   .catch(async (e) => {
-    console.error(e)
-    await prisma.$disconnect()
-    process.exit(1)
-  })
+    console.error(e);
+    await prisma.$disconnect();
+    process.exit(1);
+  });
