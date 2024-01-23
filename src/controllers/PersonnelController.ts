@@ -1,21 +1,13 @@
 import { Request, Response } from "express";
-import Personnel from "../entity/personnel";
-import { NCDataSource } from "../data_source/datasource";
 
-const datasource = NCDataSource;
 
 /**
  * Ce controlleur rassemble les méthodes permettant d'accéder aux informations du personnel de NC, de les modifiers ou même de les supprimer
  */
 const PersonnelController = {
-  async isDatasourceInitialized(req: Request, res: Response) {
-    datasource.isInitialized
-      ? console.log("Datasource OK")
-      : console.log("Datasource KO");
-  },
 
   async getAllPersonnel(req: Request, res: Response) {
-    const personnel = await datasource.manager.find(Personnel);
+    const personnel = {};
     res.json(personnel);
   },
 
@@ -23,9 +15,7 @@ const PersonnelController = {
     console.log("GET un seul profil personnel, le ", req.params.id);
 
     try {
-      const personnel = await datasource.manager.findOneByOrFail(Personnel, {
-        id: Number(req.params.id),
-      });
+      const personnel = {}
       res.json(personnel);
     } catch (error) {
       console.log("Echec de la récupération du profil à l'id ", req.params.id);
@@ -37,7 +27,7 @@ const PersonnelController = {
   },
 
   async addNewPersonnel(req: Request, res: Response) {
-    const table = datasource.manager;
+    /*const table = datasource.manager;
     const newPersonnel = table.create(Personnel, {
       nom: "Timber",
       prenom: "Saw",
@@ -66,12 +56,12 @@ const PersonnelController = {
         status: "error",
       };
       res.json(response);
-    }
+    }*/
   },
 
   async updatePersonnel(req: Request, res: Response) {
     console.log(`Mise à jour d'un profil du personnel à l'id ${req.params.id}`);
-
+    /*
     try {
       const personnel = datasource.manager.findOneByOrFail(Personnel, {
         id: Number(req.params.id),
@@ -85,6 +75,7 @@ const PersonnelController = {
       console.error(errorMsg);
       res.status(500).send(errorMsg);
     }
+    */
   },
 };
 
