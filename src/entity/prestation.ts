@@ -10,15 +10,15 @@ import Intervention from "./intervention";
 import { Soin } from "./soin";
 
 @Entity()
-export class Prestation {
+export default class Prestation {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
   commentaire: string;
 
-  @OneToMany((type) => Soin, (Soin) => Soin.id)
-  soins: Soin["nom"];
+  @ManyToOne((type) => Soin, (Soin) => Soin.id)
+  soins: Soin;
 
   @ManyToOne((type) => Intervention, (Intervention) => Intervention.id)
   intervention: Intervention["id"];

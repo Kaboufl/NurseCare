@@ -6,7 +6,7 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 import Personnel from "./personnel";
-import { Prestation } from "./prestation";
+import Prestation from "./prestation";
 
 @Entity()
 export class BonObservation {

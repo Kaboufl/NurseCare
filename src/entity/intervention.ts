@@ -7,7 +7,10 @@ import {
 } from "typeorm";
 import Patient from "./patient";
 import Personnel from "./personnel";
-import { Prestation } from "./prestation";
+import Prestation from "./prestation";
+
+import { setSeederFactory } from "typeorm-extension";
+import { Faker } from "@faker-js/faker";
 
 @Entity()
 export default class Intervention {
@@ -15,7 +18,7 @@ export default class Intervention {
   id: number;
 
   @Column("date")
-  date: string;
+  date: Date;
 
   @Column()
   lieu: string;
@@ -27,10 +30,10 @@ export default class Intervention {
   etat_facture: string;
 
   @Column("date")
-  date_facture: string;
+  date_facture: Date;
 
   @Column("date")
-  date_paiement: string;
+  date_paiement: Date;
 
   @ManyToOne((type) => Patient, (Patient) => Patient.id)
   patient: Patient;
@@ -41,3 +44,17 @@ export default class Intervention {
   @OneToMany((type) => Prestation, (Prestation) => Prestation.id)
   prestations: Prestation[];
 }
+
+export const InterventionFActory = setSeederFactory(
+  Intervention,
+  (faker: Faker) => {
+    const intervention = new Intervention();
+    intervention.date = faker.date.recent();
+    intervention.lieu = faker.location.streetAddress();
+    intervention.id_facture = faker.number.int(20);
+    intervention.etat_facture = faker.lorem.word();
+    intervention.date_facture = faker.date.recent();
+    intervention.date_paiement = faker.date.recent();
+    return intervention;
+  }
+);
