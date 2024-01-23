@@ -13,20 +13,12 @@
 const dotenv = require("dotenv");
 dotenv.config();
 
+import { PrismaClient } from '@prisma/client'
+const prisma = new PrismaClient()
+
 import PersonnelRoutes from "./routes/PersonnelRoutes";
 import AuthRoutes from "./routes/AuthRoutes";
 
-import { NCDataSource } from "./data_source/datasource";
-const datasource = NCDataSource;
-
-datasource
-  .initialize()
-  .then(() => {
-    console.log("Datasource initialisée");
-  })
-  .catch((err) => {
-    console.error("Erreur lors de l'initialisation de la base de données", err);
-  });
 
 /**
  * Cette partie permet de charger le serveur express et de définir le port 3000 (qui pourrait être une variable d'environnement)
@@ -60,38 +52,16 @@ import Personnel from "./entity/personnel";
 import { Etablissement } from "./entity/etablissement";
 
 app.get("/", async (req, res) => {
-  const personnel = datasource.manager.find(Personnel);
+  const allPersonnel = await prisma.personnel.findMany()
+  console.log(allPersonnel)
 
-  console.log(personnel);
-  res.send(personnel);
+  console.log("Root route called");
+  res.send({ ok: "ok", personnel: allPersonnel });
 });
 
 app.get("/add", async (req, res) => {
-  const manager = datasource.manager;
-
-  const newPersonnel = manager.create(Personnel, {
-    nom: "Timber",
-    prenom: "Saw",
-    adresse: "20 rue des potiers",
-    tel: "0123456789",
-    etablissement: 4,
-    role: 7,
-  });
-
-  try {
-    const response = {
-      statut: "ok",
-      item: newPersonnel,
-    };
-    manager.save(newPersonnel);
-    res.json(response);
-  } catch (error) {
-    console.error("Le personnel n'a pas pu être ajouté");
-    const response = {
-      statut: "error",
-      item: null,
-    };
-  }
+  console.log("Add route called");
+  res.send({ ok: "ok" });
 });
 
 app.listen(port, async () => {

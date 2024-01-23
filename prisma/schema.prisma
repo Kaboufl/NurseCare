@@ -1,0 +1,98 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Role {
+  id Int @id @default(autoincrement())
+  libelle String @db.VarChar(50)
+  personnel Personnel[]
+}
+
+model Personnel {
+  id Int @id @default(autoincrement())
+  nom String @db.VarChar(100)
+  prenom String @db.VarChar(100)
+  adresse String @db.VarChar(150)
+  tel String @db.VarChar(10)
+  etablissementId Int
+  roleId Int
+  mail String
+  password String
+  role Role @relation(fields: [roleId], references: [id])
+  etablissement Etablissement @relation(fields: [etablissementId], references: [id])
+  interventions Intervention[]
+}
+
+model Etablissement {
+  id Int @id @default(autoincrement())
+  nom String
+  personnel Personnel[]
+}
+
+model Intervention {
+  id Int @id @default(autoincrement())
+  date DateTime @default(now())
+  lieu String @db.VarChar(100)
+  factureId Int
+  etat_facture String
+  date_facture DateTime
+  date_paiement DateTime
+  patientId Int
+  personnelId Int
+  personnel Personnel @relation(fields: [personnelId], references: [id])
+  patient Patient @relation(fields: [patientId], references: [id])
+  prestations Prestation[]
+}
+
+model Prestation {
+  id Int @id @default(autoincrement())
+  commentaire String
+  interventionId Int
+  soinId Int
+  intervention Intervention @relation(fields: [interventionId], references: [id])
+  soin Soin @relation(fields: [soinId], references: [id])
+  bonsObservation BonObservation[]
+}
+
+model CategorieSoin {
+  id Int @id @default(autoincrement())
+  libelle String
+  parentId Int
+  parent CategorieSoin? @relation("CategoryTree", fields: [parentId], references: [id])
+  enfants CategorieSoin[] @relation("CategoryTree")
+  soins Soin[]
+}
+
+model Soin {
+  id Int @id @default(autoincrement())
+  libelle String @db.VarChar(50)
+  prestations Prestation[]
+  categorieId Int
+  categorie CategorieSoin @relation(fields: [categorieId], references: [id])
+}
+
+model Patient {
+  id Int @id @default(autoincrement())
+  nom String @db.VarChar(100)
+  prenom String @db.VarChar(100)
+  adresse String @db.VarChar(150)
+  tel String @db.VarChar(10)
+  interventions Intervention[]
+}
+
+model BonObservation {
+  id Int @id @default(autoincrement())
+  date DateTime @default(now())
+  note String @db.VarChar(255)
+  commentaire String
+  prestationId Int
+  prestation Prestation @relation(fields: [prestationId], references: [id])
+}
