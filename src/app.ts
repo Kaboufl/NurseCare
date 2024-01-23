@@ -48,8 +48,6 @@ app.use("/personnel", PersonnelRoutes);
  * Ces routes sont des routes de test, elles permettent de vérifier que la connexion
  * à la base de données est bien établie et d'intéragir avec
  */
-import Personnel from "./entity/personnel";
-import { Etablissement } from "./entity/etablissement";
 
 app.get("/", async (req, res) => {
   const allPersonnel = await prisma.personnel.findMany()
