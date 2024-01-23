@@ -7,7 +7,7 @@
     "start": "npm run build && node dist/app.js",
     "build": "tsc",
     "generate-scheme": "prisma generate",
-    "seed": "ts-node ./src/seed.ts"
+    "seed": "ts-node ./src/seeders/main.seeder.ts"
   },
   "author": "",
   "license": "ISC",
@@ -31,5 +31,8 @@
     "reflect-metadata": "^0.2.1",
     "typeorm": "^0.3.17",
     "typeorm-extension": "^3.4.0"
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
   }
 }
