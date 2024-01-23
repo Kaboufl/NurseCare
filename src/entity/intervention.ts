@@ -5,7 +5,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import Patient from "./patient";
+import { Patient } from "./patient";
 import Personnel from "./personnel";
 import Prestation from "./prestation";
 

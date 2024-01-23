@@ -10,7 +10,7 @@ import { Faker } from "@faker-js/faker";
 import { setSeederFactory } from "typeorm-extension";
 
 @Entity()
-export default class Patient {
+export class Patient {
   @PrimaryGeneratedColumn()
   id: number;
 

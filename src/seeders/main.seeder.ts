@@ -3,7 +3,7 @@ import { Seeder, SeederFactoryManager, runSeeders } from "typeorm-extension";
 import { Faker } from "@faker-js/faker";
 
 import { NCDataSource } from "../data_source/datasource";
-import Patient from "../entity/patient";
+import { Patient } from "../entity/patient";
 
 export default class MainSeeder implements Seeder {
   public async run(

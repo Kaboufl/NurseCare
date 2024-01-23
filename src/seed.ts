@@ -2,7 +2,7 @@ import "reflect-metadata";
 import { DataSource, DataSourceOptions } from "typeorm";
 import { runSeeders, SeederOptions } from "typeorm-extension";
 import Personnel from "./entity/personnel";
-import Patient from "./entity/patient";
+import { Patient } from "./entity/patient";
 import Prestation from "./entity/prestation";
 import Intervention from "./entity/intervention";
 import { PersonnelFactory } from "./entity/personnel";
