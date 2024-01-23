@@ -14,7 +14,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 import { PrismaClient } from '@prisma/client'
-const prisma = new PrismaClient()
+export const prisma = new PrismaClient()
 
 import PersonnelRoutes from "./routes/PersonnelRoutes";
 import AuthRoutes from "./routes/AuthRoutes";

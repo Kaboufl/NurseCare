@@ -1,7 +1,6 @@
 import express from "express";
 import LoginController from "../controllers/LoginController";
 import jwt from "jsonwebtoken";
-import Personnel from "../entity/personnel";
 
 const router = express.Router();
 

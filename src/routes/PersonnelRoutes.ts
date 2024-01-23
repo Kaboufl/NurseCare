@@ -18,11 +18,6 @@ const router = express.Router();
 router.use(authenticateToken);
 
 /**
- * Cette route permet de vérifier si la datasource est bien initialisée
- */
-router.get("/datasource", PersonnelController.isDatasourceInitialized);
-
-/**
  * Bien que l'url soit "/", la route est en réalité "/personnel" car elle est définie
  * dans le fichier src/app.ts avec le préfixe "/personnel", les routes suivantes font appel
  * aux méthodes du controlleur PersonnelController (cf pattern design MVC / MVVC)
