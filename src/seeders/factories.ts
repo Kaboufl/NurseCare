@@ -1,15 +1,19 @@
-import { Personnel, Role, Etablissement } from "@prisma/client";
+import {
+  Intervention,
+  Personnel,
+  Role,
+  Etablissement,
+  Patient,
+  Soin,
+  CategorieSoin,
+} from "@prisma/client";
 import { prisma } from "./main.seeder";
 import { faker } from "@faker-js/faker";
 
-const RoleFactory = {
-  async create(
-    nbItems = 3,
-    libelles = ["Directeur", "Secretaire", "Aide Soignant"]
-  ) {
-    nbItems < 1 ? (nbItems = libelles.length) : nbItems;
+export const RoleFactory = {
+  async create(libelles = ["Directeur", "Secretaire", "Aide Soignant"]) {
     let roles = [];
-    for (let index = 0; index < nbItems; index++) {
+    for (let index = 0; index < libelles.length; index++) {
       const role = await prisma.role.create({
         data: {
           libelle: libelles[index],
@@ -21,7 +25,7 @@ const RoleFactory = {
   },
 };
 
-const EtablissementFactory = {
+export const EtablissementFactory = {
   async create(nbItems: number) {
     let etablissements = [];
     for (let index = 0; index < nbItems; index++) {
@@ -36,7 +40,7 @@ const EtablissementFactory = {
   },
 };
 
-const PersonnelFactory = {
+export const PersonnelFactory = {
   async create(
     nbItems: number,
     roles: Role[],
@@ -56,12 +60,12 @@ const PersonnelFactory = {
             },
           },
           role: {
-            create: {
-              libelle: "Administrateur",
+            connect: {
+              id: faker.helpers.arrayElement(roles).id,
             },
           },
-          mail: "testmail@nurse.care",
-          password: "unmotdepassefortetcompliqueentouteslettres",
+          mail: faker.internet.email(),
+          password: "password",
         },
       });
       personnel.push(Personnel);
@@ -70,4 +74,119 @@ const PersonnelFactory = {
   },
 };
 
-export { RoleFactory, EtablissementFactory, PersonnelFactory };
+export const PatientFactory = {
+  async create(nbItems: number) {
+    let patients = [];
+    for (let index = 0; index < nbItems; index++) {
+      const patient = await prisma.patient.create({
+        data: {
+          nom: faker.person.lastName(),
+          prenom: faker.person.firstName(),
+          adresse: faker.location.streetAddress(),
+          tel: "0123456789",
+          mail: faker.internet.email(),
+        },
+      });
+      patients.push(patient);
+    }
+    return patients;
+  },
+};
+
+export const InterventionFactory = {
+  async create(nbItems: number, patients: Patient[], personnel: Personnel[]) {
+    let interventions = [];
+    for (let index = 0; index < nbItems; index++) {
+      const intervention = await prisma.intervention.create({
+        data: {
+          date: faker.date.recent(),
+          lieu: faker.location.streetAddress(),
+          factureId: index + 1,
+          etat_facture: faker.helpers.arrayElement(["payé", "non payé"]),
+          date_facture: faker.date.recent(),
+          date_paiement: faker.date.recent(),
+          patient: {
+            connect: {
+              id: faker.helpers.arrayElement(patients).id,
+            },
+          },
+          personnel: {
+            connect: {
+              id: faker.helpers.arrayElement(personnel).id,
+            },
+          },
+        },
+      });
+      interventions.push(intervention);
+    }
+    return interventions;
+  },
+};
+
+export const CategorieSoinFactory = {
+  async create(libelles = ["Actes de soin", "Actes préventifs"]) {
+    let categories = [];
+    for (let index = 0; index < libelles.length; index++) {
+      const categorie = await prisma.categorieSoin.create({
+        data: {
+          libelle: libelles[index],
+        },
+      });
+      categories.push(categorie);
+    }
+    return categories;
+  },
+};
+
+export const SoinFactory = {
+  async create(
+    nbItems: number,
+    CategoriesSoins: CategorieSoin[],
+    libelles: any = []
+  ) {
+    if (!libelles.length) {
+      libelles = faker.lorem.words();
+    }
+    let soins = [];
+    for (let index = 0; index < nbItems; index++) {
+      const soin = await prisma.soin.create({
+        data: {
+          libelle: faker.lorem.word(),
+          prix: faker.number.float(50),
+          categorie: {
+            connect: {
+              id: faker.helpers.arrayElement(CategoriesSoins).id,
+            },
+          },
+        },
+      });
+      soins.push(soin);
+    }
+    return soins;
+  },
+};
+
+export const PrestationFactory = {
+  async create(nbItems: number, interventions: Intervention[], soins: Soin[]) {
+    let prestations = [];
+    for (let index = 0; index < nbItems; index++) {
+      const prestation = await prisma.prestation.create({
+        data: {
+          commentaire: faker.lorem.paragraph(),
+          intervention: {
+            connect: {
+              id: faker.helpers.arrayElement(interventions).id,
+            },
+          },
+          soin: {
+            connect: {
+              id: faker.helpers.arrayElement(soins).id,
+            },
+          },
+        },
+      });
+      prestations.push(prestation);
+    }
+    return prestations;
+  },
+};

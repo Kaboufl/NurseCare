@@ -14,8 +14,10 @@ function authenticateToken(req: any, res: Response, next: NextFunction) {
    * en temps normal, notre application cliente devrait envoyer le token dans le header
    * de chaque requête, ce qui permet de vérifier si l'utilisateur est bien authentifié
    * avant de traiter la requête.
+   *
+   * Pour une raison étrange, tous les headers sont en minuscule, ce qui n'est pas habituel
    */
-  const authHeader = req.headers["Authorization"];
+  const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1]; // Le header authorization contient souvent le préfixe "Bearer" suivi du token, on le supprime ici
   if (token == null)
     return res.status(401).send("Veuillez vous authentifier pour continuer"); // Si le token n'est pas présent, on renvoie une erreur 401
