@@ -1,6 +1,8 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
+// Quand on modifie le schema : npm run generate-scheme
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -24,7 +26,7 @@ model Personnel {
   tel String @db.VarChar(10)
   etablissementId Int
   roleId Int
-  mail String
+  mail String @unique
   password String
   role Role @relation(fields: [roleId], references: [id])
   etablissement Etablissement @relation(fields: [etablissementId], references: [id])

@@ -1,5 +1,9 @@
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
+import { PrismaClient } from '@prisma/client';
+import bcrypt from 'bcryptjs';
+
+const prisma = new PrismaClient();
 
 /**
  * LoginController constitue l'ensemble des routes utilisées pour l'authentification sur l'application
@@ -26,30 +30,35 @@ const LoginController = {
    * @param res
    */
   login: async (req: Request, res: Response) => {
-    // insérer logique de login
+    const { email, password } = req.body;
 
-    const email = "validemail@nurse.care";
-    const password = "validpassword";
-
-    console.log(req.body);
-
-    if (req.body.email === email && req.body.password === password) {
-      // si login ok
-
-      // générer token
-
-      const token = LoginController.generateAccessToken(req.body);
-
-      res.status(200).json({
-        statut: "ok",
-        token: "Bearer " + token,
+    try {
+      const user = await prisma.personnel.findUnique({
+        where: { mail: email }
       });
-    } else {
-      // si login pas ok
-      res.status(404).json({
-        msg: "Identifiants de connexion incorrects",
-        statut: "error",
-      });
+
+      //Si l'utilisateur n'est pas trouvé (= False) on retourne une erreur 403
+      if (!user) {
+        return res.status(403).json({ message: 'Email non trouvé' });
+      }
+
+      //Sinon on prend le mdp du formulaire, on le hash et on compare avec celui en BDD
+
+      const passwordIsValid = await bcrypt.compare(password, user.password);
+
+      //Si le mdp est valide on envoie le token
+
+      if (passwordIsValid) {
+        const token = LoginController.generateAccessToken({ user_id: user.id }, 2);
+        res.status(200).json({ statut: "ok", token: "Bearer " + token });
+      } 
+      //Sinon on renvoie un 401 avec la raison de l'erreur
+      else {
+        res.status(401).json({ msg: "Identifiants de connexion incorrects", statut: "error" });
+      }
+      //Si un autre type d'erreur est survenu
+    } catch (error) {
+      res.status(500).json({ message: "Erreur du serveur" });
     }
   },
 };
