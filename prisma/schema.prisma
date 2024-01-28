@@ -56,7 +56,7 @@ model Intervention {
 
 model Prestation {
   id Int @id @default(autoincrement())
-  commentaire String
+  commentaire String @db.Text
   interventionId Int
   soinId Int
   intervention Intervention @relation(fields: [interventionId], references: [id])
@@ -67,7 +67,7 @@ model Prestation {
 model CategorieSoin {
   id Int @id @default(autoincrement())
   libelle String
-  parentId Int
+  parentId Int?
   parent CategorieSoin? @relation("CategoryTree", fields: [parentId], references: [id])
   enfants CategorieSoin[] @relation("CategoryTree")
   soins Soin[]
@@ -76,6 +76,7 @@ model CategorieSoin {
 model Soin {
   id Int @id @default(autoincrement())
   libelle String @db.VarChar(50)
+  prix Decimal @db.Decimal(10,2)
   prestations Prestation[]
   categorieId Int
   categorie CategorieSoin @relation(fields: [categorieId], references: [id])
@@ -87,6 +88,7 @@ model Patient {
   prenom String @db.VarChar(100)
   adresse String @db.VarChar(150)
   tel String @db.VarChar(10)
+  mail String @db.VarChar(80)
   interventions Intervention[]
 }
 

@@ -1,6 +1,8 @@
 import express from "express";
 import LoginController from "../controllers/LoginController";
 import jwt from "jsonwebtoken";
+
+
 const router = express.Router();
 
 function generateAccessToken(user: object) {

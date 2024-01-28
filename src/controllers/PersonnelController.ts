@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { prisma } from "../app";
 
 
 /**
@@ -7,7 +8,7 @@ import { Request, Response } from "express";
 const PersonnelController = {
 
   async getAllPersonnel(req: Request, res: Response) {
-    const personnel = {};
+    const personnel = await prisma.personnel.findMany();
     res.json(personnel);
   },
 
