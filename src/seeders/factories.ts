@@ -9,6 +9,7 @@ import {
 } from "@prisma/client";
 import { prisma } from "./main.seeder";
 import { faker } from "@faker-js/faker";
+import bcrypt from "bcryptjs";
 
 export const RoleFactory = {
   async create(libelles = ["Directeur", "Secretaire", "Aide Soignant"]) {
@@ -65,7 +66,7 @@ export const PersonnelFactory = {
             },
           },
           mail: faker.internet.email(),
-          password: "password",
+          password: await bcrypt.hash("password", 10),
         },
       });
       personnel.push(Personnel);
