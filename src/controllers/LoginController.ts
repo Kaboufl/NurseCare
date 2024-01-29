@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import { PrismaClient } from '@prisma/client';
-import bcrypt from 'bcryptjs';
+import { PrismaClient } from "@prisma/client";
+import bcrypt from "bcryptjs";
 
 const prisma = new PrismaClient();
 
@@ -34,12 +34,13 @@ const LoginController = {
 
     try {
       const user = await prisma.personnel.findUnique({
-        where: { mail: email }
+        where: { mail: email },
+        include: { role: true },
       });
 
       //Si l'utilisateur n'est pas trouvé (= False) on retourne une erreur 403
       if (!user) {
-        return res.status(403).json({ message: 'Email non trouvé' });
+        return res.status(403).json({ message: "Email non trouvé" });
       }
 
       //Sinon on prend le mdp du formulaire, on le hash et on compare avec celui en BDD
@@ -49,12 +50,20 @@ const LoginController = {
       //Si le mdp est valide on envoie le token
 
       if (passwordIsValid) {
-        const token = LoginController.generateAccessToken({ user_id: user.id }, 2);
-        res.status(200).json({ statut: "ok", token: "Bearer " + token });
-      } 
+        const token = LoginController.generateAccessToken(
+          { user_id: user.id },
+          2
+        );
+        res
+          .status(200)
+          .json({ statut: "ok", token: "Bearer " + token, role: user.role });
+      }
       //Sinon on renvoie un 401 avec la raison de l'erreur
       else {
-        res.status(401).json({ msg: "Identifiants de connexion incorrects", statut: "error" });
+        res.status(401).json({
+          msg: "Identifiants de connexion incorrects",
+          statut: "error",
+        });
       }
       //Si un autre type d'erreur est survenu
     } catch (error) {
