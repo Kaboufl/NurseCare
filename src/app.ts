@@ -17,6 +17,7 @@ import { PrismaClient } from '@prisma/client'
 export const prisma = new PrismaClient()
 
 import PersonnelRoutes from "./routes/PersonnelRoutes";
+import AideSoignantRoutes from "./routes/AideSoignantRoutes"
 import AuthRoutes from "./routes/AuthRoutes";
 
 
@@ -43,6 +44,7 @@ app.use(express.json());
  */
 app.use("/auth", AuthRoutes);
 app.use("/personnel", PersonnelRoutes);
+app.use("/aide-soignant", AideSoignantRoutes)
 
 /**
  * Ces routes sont des routes de test, elles permettent de vérifier que la connexion
