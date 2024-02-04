@@ -1,7 +1,17 @@
 import { PrismaClient } from "@prisma/client";
 import { faker, type Faker } from "@faker-js/faker";
 import * as factories from "./factories";
-export const prisma = new PrismaClient();
+require("dotenv").config();
+const DB_USER = process.env.DB_USER;
+const DB_PASSWORD = process.env.DB_PASSWORD;
+const DB_HOST = process.env.DB_HOST;
+const DB_PORT = process.env.DB_PORT;
+const DB_NAME = process.env.DB_NAME;
+
+const DB_URL = `mysql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`;
+export const prisma = new PrismaClient({
+  datasourceUrl: DB_URL,
+});
 
 async function main() {
   const roles = await factories.RoleFactory.create();
