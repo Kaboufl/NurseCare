@@ -75,7 +75,7 @@ model CategorieSoin {
 
 model Soin {
   id Int @id @default(autoincrement())
-  libelle String @db.VarChar(50)
+  libelle String @db.VarChar(75)
   prix Decimal @db.Decimal(10,2)
   prestations Prestation[]
   categorieId Int
