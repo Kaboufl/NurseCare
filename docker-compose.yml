@@ -12,3 +12,5 @@ services:
       MYSQL_PASSWORD: ${DB_PASSWORD}
     ports:
       - ${DB_PORT}:3306
+    volumes:
+      - ./docker:/docker-entrypoint-initdb.d:ro
