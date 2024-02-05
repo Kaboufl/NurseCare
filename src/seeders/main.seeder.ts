@@ -15,9 +15,12 @@ export const prisma = new PrismaClient({
 
 async function main() {
   const roles = await factories.RoleFactory.create();
-  const categoriesSoins = await factories.CategorieSoinFactory.create();
 
-  const soins = await factories.SoinFactory.create(8, categoriesSoins);
+  const categoriesSoins = await factories.CategorieSoinFactory.createFromJson();
+
+  //const categoriesSoins = await factories.CategorieSoinFactory.create();
+  //const soins = await factories.SoinFactory.create(8, categoriesSoins);
+
   const etablissements = await factories.EtablissementFactory.create(4);
   const personnel = await factories.PersonnelFactory.create(
     10,
@@ -33,13 +36,13 @@ async function main() {
   const prestations = await factories.PrestationFactory.create(
     30,
     interventions,
-    soins
+    categoriesSoins.soins
   );
 
   return {
     roles: roles,
-    categoriesSoins: categoriesSoins,
-    soins: soins,
+    categoriesSoins: categoriesSoins.categories,
+    soins: categoriesSoins.soins,
     etablissements: etablissements,
     personnel: personnel,
     patients: patients,

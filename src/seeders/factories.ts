@@ -11,6 +11,71 @@ import { prisma } from "./main.seeder";
 import { faker } from "@faker-js/faker";
 import bcrypt from "bcryptjs";
 
+const prestationSoins = [
+    {
+      libelle: "Actes de soin",
+      soins: [
+        {
+          "libelle": "Pose / retrait d'une attelle",
+          "prix": 15.00
+        },
+        {
+          "libelle": "Nettoyage d'une plaie",
+          "prix": 12.00
+        },
+        {
+          "libelle": "Changement d'un pansement",
+          "prix": 17.00
+        },
+        {
+          "libelle": "Remise en place d'une articulation",
+          "prix": 13.00
+        },
+        {
+          "libelle": "Toilette du patient",
+          "prix": 22.00
+        }
+    ],
+  },
+  {
+    libelle: "Actes d'analyse",
+    soins: [
+      {
+        "libelle": "Prise de sang",
+        "prix": 19.00
+      },
+      {
+        "libelle": "Prise d'échantillon buccal",
+        "prix": 24.00
+      },
+      {
+        "libelle": "Prise d'autres échantillons",
+        "prix": 27.00
+      },
+    ]
+  },
+  {
+    libelle: "Actes préventifs",
+    soins: [
+      {
+        "libelle": "Evaluation Sevrage Alcool",
+        "prix": 19.00
+      },
+      {
+        "libelle": "Evaluation Sevrage Tabac",
+        "prix": 19.00
+      },
+      {
+        "libelle": "Evaluation Psychologique Dépression",
+        "prix": 19.00
+      },
+      {
+        "libelle": "Evaluation Psychologique Troubles de l'alimentation",
+        "prix": 19.00
+      },
+    ],
+  }];
+
 export const RoleFactory = {
   async create(libelles = ["Directeur", "Secretaire", "Aide Soignant"]) {
     let roles = [];
@@ -137,6 +202,31 @@ export const CategorieSoinFactory = {
     }
     return categories;
   },
+  async createFromJson() {
+    let categories = [];
+    const soins = [];
+    for (const categorie of prestationSoins) {
+      const category = await prisma.categorieSoin.create({
+        data: {
+          libelle: categorie.libelle,
+        },
+      });
+      categories.push(category);
+      for (const soin of categorie.soins) {
+        const soinData = await prisma.soin.create({
+          data: {
+            libelle: soin.libelle,
+            prix: soin.prix,
+            categorie: {
+              connect: category
+            }
+          }
+        })
+        soins.push(soinData);
+      }
+    }
+    return { categories, soins };
+  }
 };
 
 export const SoinFactory = {
