@@ -170,7 +170,7 @@ export const InterventionFactory = {
           factureId: index + 1,
           etat_facture: faker.helpers.arrayElement(["payé", "non payé"]),
           date_facture: faker.date.recent(),
-          date_paiement: faker.date.recent(),
+          date_integration: faker.date.recent(),
           patient: {
             connect: {
               id: faker.helpers.arrayElement(patients).id,
