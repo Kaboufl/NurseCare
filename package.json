@@ -8,7 +8,7 @@
     "build": "tsc",
     "generate-scheme": "prisma generate",
     "seed": "ts-node ./src/seeders/main.seeder.ts",
-    "nuke": "npx prisma db push --force-reset && npx prisma migrate dev"
+    "nuke": "npx prisma db push --force-reset && npx prisma migrate reset"
   },
   "author": "",
   "license": "ISC",
