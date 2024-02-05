@@ -4,13 +4,25 @@ import { prisma } from "../app"
 export class AideSoignantController {
 
   async index(req: any, res: Response) {
-    console.log(req.user)
-    const aideSoignants = await prisma.personnel.findMany({
+    const { user_id } = req.user
+    const aideSoignant = await prisma.personnel.findUnique({
       where: {
-        roleId: 3
+        id: Number(user_id),
+      },
+      include: {
+        interventions: {
+          include: {
+            patient: true,
+            prestations: {
+              include: {
+                soin: true
+              }
+            }
+          }
+        }
       }
     })
-    res.json(aideSoignants)
+    res.json(aideSoignant)
   }
 
   async getInterventions(req: any, res: Response) {
