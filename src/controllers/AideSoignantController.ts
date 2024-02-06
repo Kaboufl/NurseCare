@@ -15,7 +15,7 @@ export class AideSoignantController {
             patient: true,
             prestations: {
               include: {
-                soin: true
+                soin: true,
               }
             }
           }
@@ -25,8 +25,8 @@ export class AideSoignantController {
     res.json(aideSoignant)
   }
 
-  async getInterventions(req: any, res: Response) {
-    const { user_id } = req.user
+  async getInterventions(req: Request & { user:number}, res: Response) {
+    const  user_id = req.user
     const aideSoignant = await prisma.personnel.findUnique({
       where: {
         id: Number(user_id),
