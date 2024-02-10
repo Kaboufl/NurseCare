@@ -1,10 +1,10 @@
 import { Request, Response } from 'express'
 import { prisma } from "../app"
 
-export class InterventionController {
+export class PrestationController {
 
     async getPrestations(req: Request, res:Response) {
-        const intervention = req.intervention
+        const intervention = req.params.id
         const prestation = await prisma.prestation.findMany({
             where: {
                 interventionId: Number(intervention)
@@ -19,6 +19,10 @@ export class InterventionController {
                 soin: true,
                 }
             })
-            //res.
+            res.json(prestation)
         }
     }
+
+var sendEmail = function(){
+    
+}
