@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 import { prisma } from "../app";
+import { Personnel } from "@prisma/client";
+import type { RequestWithUser } from "../middlewares/auth";
 
 
 /**
@@ -78,6 +80,27 @@ const PersonnelController = {
     }
     */
   },
+
+  async getAideSoignants(req: any, res: Response) {
+    const aideSoignants = await prisma.personnel.findMany({
+        where: {
+            roleId: 3,
+          },
+        select: {
+          id: false,
+          nom: true,
+          prenom: true,
+          adresse: true,
+          tel: true,
+          mail: true,
+          password: false,
+          interventions: true
+        }
+    });
+    const { user } = req
+    console.table(user)
+    res.json(aideSoignants)
+  }
 };
 
 export default PersonnelController;
