@@ -1,4 +1,6 @@
-# Nurse Care
+# Nurse Care API
+
+Ce repository constitue le backend le l'application Nurse Care, il prend la forme d'une API qui sera consomée par l'application client.
 
 ## Installation du projet
 
@@ -18,6 +20,11 @@
 - ### Installation des librairies et dépendances
 
   À la racine du projet, compléter votre fichier `.env` pour paramétrer les identifiants de connexion à la base de données (à noter que si vous utilisez Docker, les identifiants de la base de données seront ceux que vous renseignerez), et enfin `npm install`
+
+  À ce jour, le projet utilise un certain nombre de package pour son fonctionnement, lesquels sont :
+    - ``ExpressJS``, il prend en charge les requêtes du serveur HTTP
+    - ``PrismaORM``, ORM pour interagir avec la base de données
+    - ``jsonwebtoken``, prend en charge la logique de création et de validations et tokens d'identification
 
 ## Démarrer le projet
 
