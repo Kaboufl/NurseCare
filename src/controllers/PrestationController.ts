@@ -22,7 +22,3 @@ export class PrestationController {
             res.json(prestation)
         }
     }
-
-var sendEmail = function(){
-    
-}

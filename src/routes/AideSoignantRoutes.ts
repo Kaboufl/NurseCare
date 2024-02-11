@@ -26,8 +26,8 @@ router.get("/intervention/:id/prestations/mailing", (req,res)=> {
     })
 
     const html = readFileSync("./email.html").toString("utf8").replace(/{{(.*?)}}/g,()=> {
-        return data
-    });
+        return ''
+
     const mailOptions = {
         from:'noreply-nursecareAS@nursecare.org',
         to:'',
@@ -35,7 +35,7 @@ router.get("/intervention/:id/prestations/mailing", (req,res)=> {
         html:''
     }
 
-})
+})})
 
 export default router;
 
