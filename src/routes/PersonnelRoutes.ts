@@ -1,6 +1,6 @@
 import express from "express";
 import PersonnelController from "../controllers/PersonnelController";
-import authenticateToken from "../middlewares/auth";
+import { authenticateToken } from "../middlewares/auth";
 
 /**
  * Ce fichier de routes représente la correspondance entre les URLs de l'app et les méthodes à exécuter pour ces routes,
