@@ -46,7 +46,7 @@ model Intervention {
   factureId        Int
   etat_facture     String
   date_facture     DateTime
-  date_integration DateTime
+  date_integration DateTime?
   patientId        Int
   personnelId      Int
   personnel        Personnel    @relation(fields: [personnelId], references: [id])
