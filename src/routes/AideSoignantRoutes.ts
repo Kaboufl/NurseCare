@@ -2,8 +2,6 @@ import express from "express";
 import { AideSoignantController } from "../controllers/AideSoignantController";
 import { PrestationController } from "../controllers/PrestationController";
 import authenticateToken from "../middlewares/auth";
-import nodemailer from "nodemailer";
-import { readFileSync } from "fs";
 const router = express.Router();
 router.use(authenticateToken);
 
@@ -14,28 +12,10 @@ const controllerPrestations = new PrestationController();
 
 router.get("/", controllerAS.index);
 router.get("/interventions", controllerAS.getInterventions);
+router.put("/interventions/facturer/:id", controllerAS.editIntervention);
 router.get("/interventions/:id/prestations", controllerPrestations.getPrestations)
-router.get("/intervention/:id/prestations/mailing", (req,res)=> {
-    controllerPrestations.getPrestations(req,res)
-    const transporter = nodemailer.createTransport({
-        service: '',
-        auth: {
-            user:'',
-            pass:''
-        }
-    })
+router.get("/interventions/:id/prestations/mailing",)
 
-    const html = readFileSync("./email.html").toString("utf8").replace(/{{(.*?)}}/g,()=> {
-        return ''
-
-    const mailOptions = {
-        from:'noreply-nursecareAS@nursecare.org',
-        to:'',
-        subject:'Facture Intervention du ???',
-        html:''
-    }
-
-})})
 
 export default router;
 

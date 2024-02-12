@@ -47,4 +47,17 @@ export class AideSoignantController {
     const interventions = aideSoignant?.interventions ?? []
     res.json(interventions)
   }
+
+  async editIntervention(req: any, res: Response) {
+    const {id} = req.params 
+    const intervention = await prisma.intervention.update({
+      where: {
+        id: Number(id)
+      },
+      data: {
+        date_facture: new Date()
+      }
+    })
+    res.json(intervention)
+  }
 }
