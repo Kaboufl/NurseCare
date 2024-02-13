@@ -1,10 +1,13 @@
 import express from "express";
+import SecretaireController from "../controllers/SecretaireController";
+import { RequestWithUser } from "../middlewares/auth";
 import PersonnelController from "../controllers/PersonnelController";
-import { authenticateToken } from "../middlewares/auth";
+import { authenticateToken, permit } from "../middlewares/auth";
+import { prisma } from "../app";
 
 /**
  * Ce fichier de routes représente la correspondance entre les URLs de l'app et les méthodes à exécuter pour ces routes,
- * Il est important de préciser que ces routes ont toutes comme préfixe "/personnel" (voir l'importation de ces routes dans app.ts)
+ * Il est important de préciser que ces routes ont toutes comme préfixe "/secretaire" (voir l'importation de ces routes dans app.ts)
  */
 
 const router = express.Router();
@@ -17,20 +20,23 @@ const router = express.Router();
  */
 router.use(authenticateToken);
 
+
 /**
- * Cette route permet de vérifier si la datasource est bien initialisée
+ * Celle ci permet de vérifier le rôle de l'utilisateur dans le système et ainsi vérifier
+ * qu'il possède les bonnes permissions pour accéder aux méthodes des controlleurs, on définit
+ * en avance quels roles pourront accéder à ces routes
  */
+
+const validRoles = ["Secretaire", "Directeur"]
+
+router.use(permit(validRoles));
+
 /**
  * Bien que l'url soit "/", la route est en réalité "/personnel" car elle est définie
  * dans le fichier src/app.ts avec le préfixe "/personnel", les routes suivantes font appel
  * aux méthodes du controlleur PersonnelController (cf pattern design MVC / MVVC)
  */
-router.get("/", PersonnelController.getAllPersonnel);
-router.get("/:id", PersonnelController.getPersonnel);
-router.put("/:id", PersonnelController.updatePersonnel);
-router.post("/", PersonnelController.addNewPersonnel);
-router.delete("/:id", async (req, res) => {
-  res.status(200).json({ statut: "WIP" });
-});
+router.get("/aide-soignants", PersonnelController.getAideSoignants);
+
 
 export default router;

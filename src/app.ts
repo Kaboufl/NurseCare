@@ -19,6 +19,7 @@ export const prisma = new PrismaClient()
 import PersonnelRoutes from "./routes/PersonnelRoutes";
 import AideSoignantRoutes from "./routes/AideSoignantRoutes"
 import AuthRoutes from "./routes/AuthRoutes";
+import SecretaireRoutes from "./routes/SecretaireRoutes"
 
 
 /**
@@ -45,6 +46,7 @@ app.use(express.json());
 app.use("/auth", AuthRoutes);
 app.use("/personnel", PersonnelRoutes);
 app.use("/aide-soignant", AideSoignantRoutes)
+app.use("/secretaire", SecretaireRoutes)
 
 /**
  * Ces routes sont des routes de test, elles permettent de vérifier que la connexion
@@ -65,7 +67,13 @@ app.get("/add", async (req, res) => {
 });
 
 app.listen(port, async () => {
-  console.log(`server is listening on ${port}`);
+  
+  try {
+    await prisma.$connect();
+    console.log('Base de données connectée')
+  } catch (error) {
+    console.error('Connexion impossible à la base de données : ', error);
+  }
+  console.log(`Le serveur écoute sur le port ${port}`);
 
-  console.log(__dirname);
 });

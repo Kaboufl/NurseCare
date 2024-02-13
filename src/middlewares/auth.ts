@@ -7,8 +7,14 @@
 
 import jwt from "jsonwebtoken";
 import express, { Request, Response, NextFunction } from "express";
+import { Personnel, Role } from "@prisma/client";
+import { prisma } from "../app";
 
-function authenticateToken(req: any, res: Response, next: NextFunction) {
+export interface RequestWithUser extends Request {
+  user: Personnel
+}
+
+export function authenticateToken(req: any, res: Response, next: NextFunction) {
   /**
    * Cette partie permet de récupérer le token dans le header de la requête,
    * en temps normal, notre application cliente devrait envoyer le token dans le header
@@ -31,15 +37,36 @@ function authenticateToken(req: any, res: Response, next: NextFunction) {
   jwt.verify(
     token,
     String(process.env.ACCESS_TOKEN_SECRET),
-    (err: any, user: any) => {
-      if (err)
-        return res
-          .status(403)
-          .send("Session expirée, veuillez vous reconnecter");
-      req.user = user; // !! On stocke l'utilisateur dans la requête pour pouvoir le récupérer dans le controlleur !!
-      next();
+    async (err: any, user: any) => {
+      try {
+        if (err) throw (err)
+          
+        req.user = await prisma.personnel.findUniqueOrThrow({
+          where: {
+            id: user.user_id
+          },
+          include: {
+            role: true
+          }
+        }) // !! On stocke l'utilisateur dans la requête pour pouvoir le récupérer dans le controlleur !!
+        next();
+        
+      } catch (error) {
+        res.status(403).send("Session expirée, veuillez vous reconnecter");
+      }
     }
   );
 }
 
-export default authenticateToken;
+export function permit(roles: string[]) {
+
+  return (request: any, response: Response, next: NextFunction) => {
+    const { user } = request
+    console.log(user)
+    if (user && roles.includes(user.role.libelle)) {
+      next();
+    } else {
+      response.status(403).json({message: "Mauvais rôle !!"})
+    }
+  }
+}
