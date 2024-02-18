@@ -1,5 +1,6 @@
 import express from "express";
 import LoginController from "../controllers/LoginController";
+import { authenticateToken } from "../middlewares/auth";
 import jwt from "jsonwebtoken";
 
 
@@ -25,6 +26,12 @@ router.get("/", (req, res) => {
  * cependant ici la logique est déplacée dans un controlleur, en l'occurence LoginController
  */
 router.post("/login", LoginController.login);
+router.get("/logout", authenticateToken, (req, res) => {
+  return res
+    .clearCookie("access_token")
+    .status(200)
+    .json({ message: "Utilisateur déconnecté" });
+});
 
 /**
  * Ces routes sont directement accompagnées de fonctions, il est possible de faire
@@ -32,26 +39,7 @@ router.post("/login", LoginController.login);
  * "bonne pratique" de déplacer à termes la logique dans un controlleur associé
  * aux routes (cf pattern design MVC / MVVC)
  */
-router.get("/token", (req, res) => {
-  const loginObj = {
-    name: "username",
-    password: "password",
-  };
-  const token = generateAccessToken(loginObj);
-  res.json({ accessToken: token });
-});
 
-router.get("/check-token/:token", (req, res) => {
-  var token = req.params.token;
-  try {
-    const decoded = jwt.verify(token, String(process.env.ACCESS_TOKEN_SECRET));
-    res.json({ statut: "ok", token: token });
-  } catch (error) {
-    res.status(403).json({
-      statut: "unauthorized",
-      message: "Le token n'a pas été vérifié",
-    });
-  }
-});
+router.get("/profile", LoginController.getUserProfileFromToken)
 
 export default router;

@@ -4,6 +4,7 @@ import { RequestWithUser } from "../middlewares/auth";
 import PersonnelController from "../controllers/PersonnelController";
 import { authenticateToken, permit } from "../middlewares/auth";
 import { prisma } from "../app";
+import PatientController from "../controllers/PatientController";
 
 /**
  * Ce fichier de routes représente la correspondance entre les URLs de l'app et les méthodes à exécuter pour ces routes,
@@ -37,6 +38,8 @@ router.use(permit(validRoles));
  * aux méthodes du controlleur PersonnelController (cf pattern design MVC / MVVC)
  */
 router.get("/aide-soignants", PersonnelController.getAideSoignants);
+router.get("/interventions", SecretaireController.getInterventions);
+router.get("/patients", PatientController.getAllPatients);
 
 
 export default router;
