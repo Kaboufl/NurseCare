@@ -19,18 +19,19 @@ model Role {
 }
 
 model Personnel {
-  id              Int            @id @default(autoincrement())
-  nom             String         @db.VarChar(100)
-  prenom          String         @db.VarChar(100)
-  adresse         String         @db.VarChar(150)
-  tel             String         @db.VarChar(10)
+  id              Int              @id @default(autoincrement())
+  nom             String           @db.VarChar(100)
+  prenom          String           @db.VarChar(100)
+  adresse         String           @db.VarChar(150)
+  tel             String           @db.VarChar(10)
   etablissementId Int
   roleId          Int
-  mail            String         @unique
+  mail            String           @unique
   password        String
-  role            Role           @relation(fields: [roleId], references: [id])
-  etablissement   Etablissement  @relation(fields: [etablissementId], references: [id])
+  role            Role             @relation(fields: [roleId], references: [id])
+  etablissement   Etablissement    @relation(fields: [etablissementId], references: [id])
   interventions   Intervention[]
+  BonObservation  BonObservation[]
 }
 
 model Etablissement {
@@ -95,8 +96,10 @@ model Patient {
 model BonObservation {
   id           Int        @id @default(autoincrement())
   date         DateTime   @default(now())
-  note         String     @db.VarChar(255)
+  note         Int
   commentaire  String
   prestationId Int
   prestation   Prestation @relation(fields: [prestationId], references: [id])
+  stagiaireId  Int
+  stagiaire    Personnel  @relation(fields: [stagiaireId], references: [id])
 }
