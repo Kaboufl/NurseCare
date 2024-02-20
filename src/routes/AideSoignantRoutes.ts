@@ -1,7 +1,8 @@
 import express from "express";
 import { AideSoignantController } from "../controllers/AideSoignantController";
 import { PrestationController } from "../controllers/PrestationController";
-import authenticateToken from "../middlewares/auth";
+import { authenticateToken } from "../middlewares/auth";
+
 const router = express.Router();
 router.use(authenticateToken);
 

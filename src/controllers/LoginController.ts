@@ -56,7 +56,7 @@ const LoginController = {
         );
         res
           .status(200)
-          .json({ statut: "ok", token: "Bearer " + token, role: user.role });
+          .json({ statut: "ok", token: "Bearer " + token, user: user });
       }
       //Sinon on renvoie un 401 avec la raison de l'erreur
       else {

@@ -27,6 +27,7 @@ async function main() {
     roles,
     etablissements
   );
+
   const patients = await factories.PatientFactory.create(10);
   const interventions = await factories.InterventionFactory.create(
     20,
@@ -53,7 +54,13 @@ async function main() {
 
 main()
   .then(async (result) => {
-    console.log(result);
+    const { personnel } = result
+    const aideSoignants = personnel.filter((p) => p.roleId === 3)
+    const secretaires = personnel.filter((p) => p.roleId === 2)
+    const directeurs = personnel.filter((p) => p.roleId === 1)
+    console.table(aideSoignants)
+    console.table(secretaires)
+    console.table(directeurs)
     await prisma.$disconnect();
   })
   .catch(async (e) => {
