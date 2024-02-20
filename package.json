@@ -30,6 +30,7 @@
     "dotenv": "^16.3.1",
     "express": "^4.16.4",
     "jsonwebtoken": "^9.0.2",
+    "jspdf": "^2.5.1",
     "mysql2": "^3.6.5",
     "nodemailer": "^6.9.9",
     "reflect-metadata": "^0.2.1",

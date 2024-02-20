@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import { prisma } from "../app"
 import nodemailer from "nodemailer";
+import { jsPDF } from "jspdf";
 import { readFileSync } from "fs";
 
 export class PrestationController {
@@ -41,21 +42,30 @@ export class PrestationController {
                 }
             })
         const transporter = nodemailer.createTransport({
-            service: '',
+            service: 'smtp.office365.com',
             auth: {
                 user:'',
                 pass:''
             }
         })
+        const pdf = new jsPDF();
+        const prestation = prestations[0].intervention;
+        const titleText = `Facture des prestations de ${prestation.patient.nom} ${prestation.patient.prenom} du ${prestation.date_integration}`;
+        const titleLines = pdf.splitTextToSize(titleText, pdf.internal.pageSize.width - 20);
+        titleLines.forEach((line:any, index:any) => {
+            pdf.text(line, 10, 10 + index * 10);
+          });
+
+        const titleHeight = titleLines.length * 10;
+        const data = this.prestationsFiltrees.map(intervention => [intervention.libelle_prestation, `${intervention.prix_prestation} €`]);
     
-        const html = readFileSync("./email.html").toString("utf8").replace(/{{(.*?)}}/g,(match) => {
-            return prestations[0].toString() || ''});
+        //const html = readFileSync("./email.html").toString("utf8").replace(/{{(.*?)}}/g,(match) => {
+        //    return prestations[0].toString() || ''});
     
         const mailOptions = {
             from:'noreply-nursecareAS@nursecare.org',
             to:'',
             subject:'Facture Intervention du ???',
-            html: html
         }
     
         transporter.sendMail(mailOptions, (err,info) => {
