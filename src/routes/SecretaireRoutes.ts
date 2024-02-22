@@ -40,6 +40,8 @@ router.use(permit(validRoles));
 router.get("/aide-soignants", PersonnelController.getAideSoignants);
 router.get("/interventions", SecretaireController.getInterventions);
 router.get("/patients", PatientController.getAllPatients);
+router.get("/infirmiers", SecretaireController.getAideSoignants);
+router.get("/soins", SecretaireController.getSoins);
 
 
 export default router;
