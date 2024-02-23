@@ -31,6 +31,14 @@ const SecretaireController = {
     async getSoins(req: Request, res: Response) {
         const soins = await prisma.soin.findMany()
         res.status(200).json(soins)
+    },
+
+    async addIntervention(req: Request, res: Response) {
+        const intervention = req.body
+
+        console.log(intervention.prestations)
+
+        res.status(200).json({ message: "ok" })
     }
     
 }

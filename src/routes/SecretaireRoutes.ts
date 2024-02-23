@@ -33,15 +33,16 @@ const validRoles = ["Secretaire", "Directeur"]
 router.use(permit(validRoles));
 
 /**
- * Bien que l'url soit "/", la route est en réalité "/personnel" car elle est définie
- * dans le fichier src/app.ts avec le préfixe "/personnel", les routes suivantes font appel
- * aux méthodes du controlleur PersonnelController (cf pattern design MVC / MVVC)
+ * Bien que l'url soit "/", la route est en réalité "/secretaire" car elle est définie
+ * dans le fichier src/app.ts avec le préfixe "/secretaire", les routes suivantes font appel
+ * aux méthodes du controlleur SecretaireController (cf pattern design MVC / MVVC)
  */
 router.get("/aide-soignants", PersonnelController.getAideSoignants);
 router.get("/interventions", SecretaireController.getInterventions);
 router.get("/patients", PatientController.getAllPatients);
 router.get("/infirmiers", SecretaireController.getAideSoignants);
 router.get("/soins", SecretaireController.getSoins);
+router.post("/intervention", SecretaireController.addIntervention);
 
 
 export default router;
