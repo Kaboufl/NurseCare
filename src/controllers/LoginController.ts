@@ -34,6 +34,7 @@ const LoginController = {
       const data: any = jwt.verify(token,String(process.env.ACCESS_TOKEN_SECRET));
       const userProfile = await prisma.personnel.findUniqueOrThrow({
         select: {
+          id: true,
           nom: true,
           prenom: true,
           adresse: true,
