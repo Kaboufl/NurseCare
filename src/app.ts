@@ -10,6 +10,7 @@
  * Cette partie permet de charger les variables d'environnement depuis le fichier .env
  * qui contiennent les identifiants de connexion à la base de données (cf README)
  */
+const cookieParser = require('cookie-parser')
 const dotenv = require("dotenv");
 dotenv.config();
 
@@ -37,6 +38,7 @@ const port = 3000;
  * au format JSON, ainsi nous pourrons récupérer les données envoyées par l'application cliente
  */
 app.use(express.json());
+app.use(cookieParser());
 
 /**
  * Cette partie permet de définir les routes de l'application, ici nous avons deux routes :
