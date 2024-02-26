@@ -25,7 +25,7 @@ export class PrestationController {
             res.json(prestation)
         }
 
-    async maillingController(req: Request,res: Response) {
+    async maillingIntervention(req: Request,res: Response) {
         const intervention = req.params.id
         const prestations = await prisma.prestation.findMany({
             where: {
@@ -80,7 +80,7 @@ export class PrestationController {
         const pdfFileName = `fact-${fullDate}-${prestation.id}.pdf`;
         pdf.save(pdfFileName);
         const fakePdfBase64 = pdf.output('datauristring');
-        
+
         const mailContent = {
             from: "noreply-nursecare@outlook.com",
             to: prestation.patient.mail,

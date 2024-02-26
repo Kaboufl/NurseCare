@@ -14,8 +14,7 @@ const controllerPrestations = new PrestationController();
 router.get("/", controllerAS.index);
 router.get("/interventions", controllerAS.getInterventions);
 router.put("/interventions/facturer/:id", controllerAS.editIntervention);
-router.get("/interventions/:id/prestations", controllerPrestations.getPrestations)
-router.get("/interventions/:id/prestations/mailing",)
+router.get("/interventions/mailing/:id", controllerPrestations.maillingIntervention);
 
 
 export default router;
