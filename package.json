@@ -32,6 +32,7 @@
     "express": "^4.16.4",
     "jsonwebtoken": "^9.0.2",
     "jspdf": "^2.5.1",
+    "jspdf-autotable": "^3.8.2",
     "mysql2": "^3.6.5",
     "nodemailer": "^6.9.9",
     "reflect-metadata": "^0.2.1",
