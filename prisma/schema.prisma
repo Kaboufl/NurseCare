@@ -59,8 +59,8 @@ model Prestation {
   commentaire     String           @db.Text
   interventionId  Int
   soinId          Int
-  intervention    Intervention     @relation(fields: [interventionId], references: [id])
-  soin            Soin             @relation(fields: [soinId], references: [id])
+  intervention    Intervention     @relation(fields: [interventionId], references: [id], onDelete: Cascade)
+  soin            Soin             @relation(fields: [soinId], references: [id], onDelete: Cascade)
   bonsObservation BonObservation[]
 }
 
