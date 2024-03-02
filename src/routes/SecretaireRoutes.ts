@@ -43,6 +43,7 @@ router.get("/patients", PatientController.getAllPatients);
 router.get("/infirmiers", SecretaireController.getAideSoignants);
 router.get("/soins", SecretaireController.getSoins);
 router.post("/intervention", SecretaireController.addIntervention);
+router.put("/intervention/:id", SecretaireController.editIntervention);
 
 
 export default router;
