@@ -45,7 +45,7 @@ model Intervention {
   lieu             String       @db.VarChar(100)
   factureId        Int
   etat_facture     String
-  date_facture     DateTime
+  date_facture     DateTime?
   date_integration DateTime?
   patientId        Int
   personnelId      Int
