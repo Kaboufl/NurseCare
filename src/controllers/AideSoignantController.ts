@@ -5,7 +5,6 @@ export class AideSoignantController {
 
   async index(req: any, res: Response) {
     const { user } = req
-    console.log(req.user)
     const aideSoignant = await prisma.personnel.findUnique({
       where: {
         id: Number(user.id),
@@ -26,8 +25,8 @@ export class AideSoignantController {
     res.json(aideSoignant)
   }
 
-  async getInterventions(req:any, res: Response) {
-    const  user_id = req.user
+  async getInterventions(req: any, res: Response) {
+    const user_id = req.user
     const aideSoignant = await prisma.personnel.findUnique({
       where: {
         id: Number(user_id),
@@ -50,7 +49,7 @@ export class AideSoignantController {
   }
 
   async editIntervention(req: any, res: Response) {
-    const {id} = req.params 
+    const { id } = req.params
     const intervention = await prisma.intervention.update({
       where: {
         id: Number(id)
