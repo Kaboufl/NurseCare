@@ -84,8 +84,8 @@ const SecretaireController = {
 
     async editIntervention(req: Request, res: Response) {
         const updatedIntervention: Partial<Intervention | any> = req.body
-        console.log(updatedIntervention)
-        // console.log(updatedIntervention.prestations)
+        // console.log(updatedIntervention)
+        console.log(updatedIntervention.prestations)
         const intervention = await prisma.intervention.update({
             where: {
                 id: Number(req.params.id)
@@ -95,7 +95,6 @@ const SecretaireController = {
                 patientId: undefined,
                 personnelId: undefined,
                 date: updatedIntervention.date ? new Date(updatedIntervention.date).toISOString() : new Date().toDateString(),
-                date_facture: new Date().toISOString(),
                 prestations: undefined,
                 patient: {
                     connect: {
@@ -133,17 +132,17 @@ const SecretaireController = {
 
         const newPrestations = await Promise.all(newPrestationsPromises);
 
-        const existingPrestations = updatedIntervention.prestations.filter((prestation: Prestation) => prestation.id !== 0)
+        const reqPrestations = updatedIntervention.prestations.filter((prestation: Prestation) => prestation.id !== 0)
 
-        const deletedPrestationsPromises = intervention.prestations.filter((prestation: Prestation) => !existingPrestations.some((existingPrestation: Prestation) => existingPrestation.id === prestation.id)).map((prestation: Prestation) => {
-            return prisma.prestation.delete({
-                where: {
-                    id: prestation.id
+        const supPrestations = intervention.prestations.filter((prestation: Prestation) => !reqPrestations.some((existPrestation: Prestation) => existPrestation.id === prestation.id))
+
+        const deletePrestationsPromises = await prisma.prestation.deleteMany({
+            where: {
+                id: {
+                    in: supPrestations.map((p: Prestation) => p.id)
                 }
-            }).then()
+            }
         })
-
-        const deletedPrestations = await Promise.all(deletedPrestationsPromises);
 
         res.status(200).json({
             message: "ok"
