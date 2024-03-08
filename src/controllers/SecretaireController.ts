@@ -41,6 +41,13 @@ const SecretaireController = {
     async addIntervention(req: Request, res: Response) {
         const intervention = req.body
 
+        const today = new Date()
+        const dateIntervention = new Date(intervention.date)
+
+        if(today > dateIntervention) {
+            return res.status(400).json({ message: "Impossible de créer une intervention antérieure à aujourd'hui !"})
+        }
+
 
         const newIntervention = await prisma.intervention.create({
             data: {
