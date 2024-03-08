@@ -37,16 +37,19 @@ router.use(permit(validRoles));
  * dans le fichier src/app.ts avec le préfixe "/secretaire", les routes suivantes font appel
  * aux méthodes du controlleur SecretaireController (cf pattern design MVC / MVVC)
  */
-router.get("/aide-soignants", PersonnelController.getAideSoignants);
-router.get("/interventions", SecretaireController.getInterventions);
-router.delete("/interventions/:id", SecretaireController.deleteIntervention);
-router.get("/patients", PatientController.getAllPatients);
-router.post("/patients", PatientController.addPatient);
-router.delete("/patients/:id", PatientController.deletePatient);
 router.get("/infirmiers", SecretaireController.getAideSoignants);
-router.get("/soins", SecretaireController.getSoins);
+router.get("/aide-soignants", PersonnelController.getAideSoignants);
+
+router.get("/interventions", SecretaireController.getInterventions);
 router.post("/intervention", SecretaireController.addIntervention);
 router.put("/intervention/:id", SecretaireController.editIntervention);
+router.delete("/interventions/:id", SecretaireController.deleteIntervention);
 
+router.get("/patients", PatientController.getAllPatients);
+router.post("/patients", PatientController.addPatient);
+router.put("/patients/:id", PatientController.updatePatient);
+router.delete("/patients/:id", PatientController.deletePatient);
+
+router.get("/soins", SecretaireController.getSoins);
 
 export default router;
