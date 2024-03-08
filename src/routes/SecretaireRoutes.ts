@@ -39,7 +39,10 @@ router.use(permit(validRoles));
  */
 router.get("/aide-soignants", PersonnelController.getAideSoignants);
 router.get("/interventions", SecretaireController.getInterventions);
+router.delete("/interventions/:id", SecretaireController.deleteIntervention);
 router.get("/patients", PatientController.getAllPatients);
+router.post("/patients", PatientController.addPatient);
+router.delete("/patients/:id", PatientController.deletePatient);
 router.get("/infirmiers", SecretaireController.getAideSoignants);
 router.get("/soins", SecretaireController.getSoins);
 router.post("/intervention", SecretaireController.addIntervention);

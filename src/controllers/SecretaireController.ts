@@ -47,7 +47,6 @@ const SecretaireController = {
                 ...intervention,
                 id: undefined,
                 date: new Date(intervention.date).toISOString(),
-                date_facture: new Date().toISOString(), // penser à rendre le champ date_facture nullable
                 date_integration: undefined,
                 patient: {
                     connect: {
@@ -136,7 +135,7 @@ const SecretaireController = {
 
         const supPrestations = intervention.prestations.filter((prestation: Prestation) => !reqPrestations.some((existPrestation: Prestation) => existPrestation.id === prestation.id))
 
-        const deletePrestationsPromises = await prisma.prestation.deleteMany({
+        const deletePrestations = await prisma.prestation.deleteMany({
             where: {
                 id: {
                     in: supPrestations.map((p: Prestation) => p.id)
@@ -147,6 +146,25 @@ const SecretaireController = {
         res.status(200).json({
             message: "ok"
         })
+    },
+
+    async deleteIntervention(req: Request, res: Response) {
+        const interventionId = req.params.id
+        try {
+            const intervention = await prisma.intervention.delete({
+                where: {
+                    id: parseInt(interventionId)
+                }
+            })
+            res.status(200).json({
+                message: "Intervention supprimée"
+            })
+        } catch (error) {
+            res.status(500).json({
+                message: "Une erreur est survenue",
+                error: error
+            })
+        }
     }
 
 }
