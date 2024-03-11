@@ -8,6 +8,6 @@ const controller = new DirecteurController();
 const router = express.Router();
 // router.use(authenticateToken);
 
-router.get("/", controller.getMoyennes);
-
+router.get("/");
+router.get("/moyenneEtablissement", controller.getMoyennes);
 export default router;
