@@ -29,9 +29,9 @@ const LoginController = {
 
     let userId = undefined;
 
-      
+
     try {
-      const data: any = jwt.verify(token,String(process.env.ACCESS_TOKEN_SECRET));
+      const data: any = jwt.verify(token, String(process.env.ACCESS_TOKEN_SECRET));
       const userProfile = await prisma.personnel.findUniqueOrThrow({
         select: {
           id: true,
@@ -49,13 +49,12 @@ const LoginController = {
       res.status(200).json({
         user: userProfile
       })
-      console.log(userProfile)
-      
+
     } catch (error) {
       //console.error(error)
       return res.status(403).json({ message: "Session expirée, veuillez vous reconnecter" });
     }
-      
+
   },
 
   /**
@@ -108,7 +107,7 @@ const LoginController = {
       }
       //Si un autre type d'erreur est survenu
     } catch (error) {
-       return res.status(500).json({ message: "Erreur du serveur" });
+      return res.status(500).json({ message: "Erreur du serveur" });
     }
   },
 };

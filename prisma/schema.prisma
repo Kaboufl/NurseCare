@@ -16,6 +16,8 @@ model Role {
   id        Int         @id @default(autoincrement())
   libelle   String      @db.VarChar(50)
   personnel Personnel[]
+
+  @@map("role")
 }
 
 model Personnel {
@@ -32,6 +34,8 @@ model Personnel {
   etablissement   Etablissement    @relation(fields: [etablissementId], references: [id])
   interventions   Intervention[]
   BonObservation  BonObservation[]
+
+  @@map("personnel")
 }
 
 model Etablissement {
@@ -46,13 +50,15 @@ model Intervention {
   lieu             String       @db.VarChar(100)
   factureId        Int
   etat_facture     String
-  date_facture     DateTime
+  date_facture     DateTime?
   date_integration DateTime?
   patientId        Int
   personnelId      Int
   personnel        Personnel    @relation(fields: [personnelId], references: [id])
   patient          Patient      @relation(fields: [patientId], references: [id])
   prestations      Prestation[]
+
+  @@map("intervention")
 }
 
 model Prestation {
@@ -72,6 +78,8 @@ model CategorieSoin {
   parent   CategorieSoin?  @relation("CategoryTree", fields: [parentId], references: [id])
   enfants  CategorieSoin[] @relation("CategoryTree")
   soins    Soin[]
+
+  @@map("categorie_soin")
 }
 
 model Soin {
@@ -81,6 +89,8 @@ model Soin {
   prestations Prestation[]
   categorieId Int
   categorie   CategorieSoin @relation(fields: [categorieId], references: [id])
+
+  @@map("soin")
 }
 
 model Patient {
@@ -91,6 +101,8 @@ model Patient {
   tel           String         @db.VarChar(10)
   mail          String         @db.VarChar(80)
   interventions Intervention[]
+
+  @@map("patient")
 }
 
 model BonObservation {
@@ -102,4 +114,6 @@ model BonObservation {
   prestation   Prestation @relation(fields: [prestationId], references: [id])
   stagiaireId  Int
   stagiaire    Personnel  @relation(fields: [stagiaireId], references: [id])
+
+  @@map("bon_observation")
 }

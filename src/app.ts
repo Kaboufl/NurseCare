@@ -56,15 +56,12 @@ app.use("/directeur", DirecteurRoutes);
  */
 
 app.get("/", async (req, res) => {
-  const allPersonnel = await prisma.personnel.findMany();
-  console.log(allPersonnel);
+  const allPersonnel = await prisma.personnel.findMany()
 
-  console.log("Root route called");
   res.send({ ok: "ok", personnel: allPersonnel });
 });
 
 app.get("/add", async (req, res) => {
-  console.log("Add route called");
   res.send({ ok: "ok" });
 });
 

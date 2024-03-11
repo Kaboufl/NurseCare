@@ -26,7 +26,7 @@ router.get("/", (req, res) => {
  * cependant ici la logique est déplacée dans un controlleur, en l'occurence LoginController
  */
 router.post("/login", LoginController.login);
-router.get("/logout", authenticateToken, (req, res) => {
+router.get("/logout", (req, res) => {
   return res
     .clearCookie("access_token")
     .status(200)

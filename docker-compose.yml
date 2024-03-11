@@ -13,4 +13,5 @@ services:
     ports:
       - ${DB_PORT}:3306
     volumes:
-      - ./docker:/docker-entrypoint-initdb.d:ro
+      - ./docker/db_user.sql:/docker-entrypoint-initdb.d/db_user.sql:ro
+      - ./docker/my.cnf:/etc/mysql/conf.d/my.cnf:ro
