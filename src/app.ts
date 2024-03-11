@@ -57,19 +57,16 @@ app.use("/secretaire", SecretaireRoutes)
 
 app.get("/", async (req, res) => {
   const allPersonnel = await prisma.personnel.findMany()
-  console.log(allPersonnel)
 
-  console.log("Root route called");
   res.send({ ok: "ok", personnel: allPersonnel });
 });
 
 app.get("/add", async (req, res) => {
-  console.log("Add route called");
   res.send({ ok: "ok" });
 });
 
 app.listen(port, async () => {
-  
+
   try {
     await prisma.$connect();
     console.log('Base de données connectée')

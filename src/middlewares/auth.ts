@@ -36,7 +36,7 @@ export async function authenticateToken(req: any, res: Response, next: NextFunct
 
   try {
     const data: any = jwt.verify(token, String(process.env.ACCESS_TOKEN_SECRET));
-    
+
     try {
       const user = await prisma.personnel.findUniqueOrThrow({
         where: {
@@ -51,7 +51,7 @@ export async function authenticateToken(req: any, res: Response, next: NextFunct
       console.error("Error retrieving user from database, the token may have been tampered with... : ", prismaError)
       return res.status(500).send({ error: "Database error" });
     }
-    
+
     next();
   } catch (jwtError) {
     console.error("Error verifying JWT: ", jwtError)
@@ -63,11 +63,10 @@ export function permit(roles: string[]) {
 
   return (request: any, response: Response, next: NextFunction) => {
     const { user } = request
-    console.log(user)
     if (user && roles.includes(user.role.libelle)) {
       next();
     } else {
-      response.status(403).json({message: "Mauvais rôle !!"})
+      response.status(403).json({ message: "Mauvais rôle !!" })
     }
   }
 }

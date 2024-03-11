@@ -6,24 +6,31 @@
 
 */
 -- DropIndex
+ALTER TABLE `intervention` DROP FOREIGN KEY `Intervention_patientId_fkey`;
 DROP INDEX `Intervention_patientId_fkey` ON `intervention`;
 
 -- DropIndex
+ALTER TABLE `intervention` DROP FOREIGN KEY `Intervention_personnelId_fkey`;
 DROP INDEX `Intervention_personnelId_fkey` ON `intervention`;
 
 -- DropIndex
+ALTER TABLE `personnel` DROP FOREIGN KEY `Personnel_etablissementId_fkey`;
 DROP INDEX `Personnel_etablissementId_fkey` ON `personnel`;
 
 -- DropIndex
+ALTER TABLE `personnel` DROP FOREIGN KEY `Personnel_roleId_fkey`;
 DROP INDEX `Personnel_roleId_fkey` ON `personnel`;
 
 -- DropIndex
+ALTER TABLE `prestation` DROP FOREIGN KEY `Prestation_interventionId_fkey`;
 DROP INDEX `Prestation_interventionId_fkey` ON `prestation`;
 
 -- DropIndex
+ALTER TABLE `prestation` DROP FOREIGN KEY `Prestation_soinId_fkey`;
 DROP INDEX `Prestation_soinId_fkey` ON `prestation`;
 
 -- DropIndex
+ALTER TABLE `soin` DROP FOREIGN KEY `Soin_categorieId_fkey`;
 DROP INDEX `Soin_categorieId_fkey` ON `soin`;
 
 -- DropTable
