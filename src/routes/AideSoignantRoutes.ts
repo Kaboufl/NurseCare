@@ -15,6 +15,7 @@ router.get("/", controllerAS.index);
 router.get("/interventions", controllerAS.getInterventions);
 router.put("/interventions/facturer/:id", controllerAS.editIntervention);
 router.post("/interventions/mailing/:id", controllerPrestations.maillingIntervention);
+router.post("/prestations/:id/commentaire", controllerPrestations.updatePrestationCommentaire);
 
 
 export default router;
