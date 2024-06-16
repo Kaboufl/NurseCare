@@ -6,6 +6,31 @@ import autoTable from "jspdf-autotable";
 // import { readFileSync } from "fs";
 
 export class PrestationController {
+  
+  async updatePrestationCommentaire(req: Request, res: Response) {
+    const idPrestation = req.params.id;
+    const newCommentaire = req.body.commentaire;
+    try {
+      const updatePrestation = await prisma.prestation.update({
+        where: {
+          id: parseInt(idPrestation)
+        },
+        data: {
+          commentaire: newCommentaire
+        }
+      });
+      return res.status(200).json({
+        status: "ok",
+        message: "Commentaire modifié"
+      });
+    } catch(error) {
+      return res.status(400).json({
+        status: 'error',
+        message: "Impossible de trouver la prestation demandée"
+      });
+    }
+  }
+
   async getPrestations(req: Request, res: Response) {
     const intervention = req.params.id;
     const prestation = await prisma.prestation.findMany({

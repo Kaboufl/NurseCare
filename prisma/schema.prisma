@@ -41,6 +41,8 @@ model Etablissement {
   id        Int         @id @default(autoincrement())
   nom       String
   personnel Personnel[]
+
+  @@map("etablissement")
 }
 
 model Intervention {
