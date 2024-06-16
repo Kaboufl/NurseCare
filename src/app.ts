@@ -14,14 +14,13 @@ const cookieParser = require('cookie-parser')
 const dotenv = require("dotenv");
 dotenv.config();
 
-import { PrismaClient } from '@prisma/client'
-export const prisma = new PrismaClient()
+import { PrismaClient } from "@prisma/client";
+export const prisma = new PrismaClient();
 
 import PersonnelRoutes from "./routes/PersonnelRoutes";
-import AideSoignantRoutes from "./routes/AideSoignantRoutes"
+import AideSoignantRoutes from "./routes/AideSoignantRoutes";
 import AuthRoutes from "./routes/AuthRoutes";
-import SecretaireRoutes from "./routes/SecretaireRoutes"
-
+import SecretaireRoutes from "./routes/SecretaireRoutes";
 
 /**
  * Cette partie permet de charger le serveur express et de définir le port 3000 (qui pourrait être une variable d'environnement)
@@ -29,6 +28,7 @@ import SecretaireRoutes from "./routes/SecretaireRoutes"
 
 import express from "express";
 import "reflect-metadata";
+import DirecteurRoutes from "./routes/DirecteurRoutes";
 
 const app = express();
 const port = 3000;
@@ -47,9 +47,9 @@ app.use(cookieParser());
  */
 app.use("/auth", AuthRoutes);
 app.use("/personnel", PersonnelRoutes);
-app.use("/aide-soignant", AideSoignantRoutes)
-app.use("/secretaire", SecretaireRoutes)
-
+app.use("/aide-soignant", AideSoignantRoutes);
+app.use("/secretaire", SecretaireRoutes);
+app.use("/directeur", DirecteurRoutes);
 /**
  * Ces routes sont des routes de test, elles permettent de vérifier que la connexion
  * à la base de données est bien établie et d'intéragir avec
@@ -66,13 +66,11 @@ app.get("/add", async (req, res) => {
 });
 
 app.listen(port, async () => {
-
   try {
     await prisma.$connect();
-    console.log('Base de données connectée')
+    console.log("Base de données connectée");
   } catch (error) {
-    console.error('Connexion impossible à la base de données : ', error);
+    console.error("Connexion impossible à la base de données : ", error);
   }
   console.log(`Le serveur écoute sur le port ${port}`);
-
 });
